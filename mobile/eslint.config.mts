@@ -9,7 +9,7 @@ export default defineConfig([
     plugins: { js },
     extends: ['js/recommended'],
     rules: {
-      quotes: ['error', 'double'],
+      quotes: ['error', 'single'],
       semi: ['error', 'always'],
       'comma-dangle': ['error', 'always-multiline'],
       'object-curly-spacing': ['error', 'always'],
