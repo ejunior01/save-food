@@ -9,7 +9,9 @@ import { RootStackParamList } from './types';
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 export function RootStack() {
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, isReady } = useAuth();
+
+  if (!isReady) { return null; }
 
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>

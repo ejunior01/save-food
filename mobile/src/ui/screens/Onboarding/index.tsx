@@ -7,6 +7,7 @@ import { styles } from './styles';
 import { theme } from '@ui/styles/theme';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { AuthStackScreenProps } from '@app/navigation/types';
+import { useAuth } from '@app/context/AuthContext';
 
 type SlideKind = 'pasta' | 'milk' | 'salad';
 
@@ -51,12 +52,14 @@ type Props = AuthStackScreenProps<'Onboarding'>;
 export function Onboarding({ navigation }: Props) {
   const [step, setStep] = React.useState(0);
   const { top, bottom } = useSafeAreaInsets();
+  const { markOnboardingDone } = useAuth();
 
   const currentSlide = slides[step];
 
   const handleDone = React.useCallback(() => {
+    markOnboardingDone();
     navigation.navigate('Login');
-  }, [navigation]);
+  }, [navigation, markOnboardingDone]);
 
   const handleNext = React.useCallback(() => {
     if (step < slides.length - 1) {
