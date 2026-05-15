@@ -1,7 +1,7 @@
 import { ImageBackground, Pressable, StatusBar, View } from 'react-native';
 import React, { useRef } from 'react';
 import { LinearGradient } from 'expo-linear-gradient';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { AppText } from '@ui/components/AppText';
 import { AuthStackScreenProps } from '@app/navigation/types';
@@ -18,6 +18,7 @@ type Props = AuthStackScreenProps<'Login'>;
 
 export function Login({ navigation }: Props) {
   const authSheetRef = useRef<AuthBottomSheetHandle>(null);
+  const { top, bottom } = useSafeAreaInsets();
 
   return (
     <>
@@ -43,7 +44,7 @@ export function Login({ navigation }: Props) {
           style={styles.gradient}
         />
 
-        <SafeAreaView style={styles.content}>
+        <View style={[styles.content, { paddingTop: top + 16, paddingBottom: bottom + 16 }]}>
           {/* Logo */}
           <View style={styles.logoArea}>
             <Logo />
@@ -93,7 +94,7 @@ export function Login({ navigation }: Props) {
               </View>
             </View>
           </View>
-        </SafeAreaView>
+        </View>
       </ImageBackground>
 
       <AuthBottomSheet ref={authSheetRef} />

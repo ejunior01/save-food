@@ -3,6 +3,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import { AuthStack } from './AuthStack';
 import { AppNavigator } from './AppNavigator';
+import { Splash } from '@ui/screens/Splash';
 import { useAuth } from '@app/context/AuthContext';
 import { RootStackParamList } from './types';
 
@@ -11,7 +12,7 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 export function RootStack() {
   const { isAuthenticated, isReady } = useAuth();
 
-  if (!isReady) { return null; }
+  if (!isReady) { return <Splash />; }
 
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>

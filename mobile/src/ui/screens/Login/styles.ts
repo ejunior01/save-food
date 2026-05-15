@@ -11,7 +11,6 @@ export const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'space-between',
     paddingHorizontal: 24,
-    paddingVertical: 16,
   },
   logoArea: {
     paddingTop: 8,

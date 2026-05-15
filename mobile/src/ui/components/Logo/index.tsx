@@ -29,11 +29,11 @@ function PaperBagIcon() {
   );
 }
 
-export function Logo() {
+export function Logo({ textColor = TEXT_COLOR }: { textColor?: string }) {
   return (
     <View style={styles.container}>
       <PaperBagIcon />
-      <Text style={styles.text}>DespensaCerta</Text>
+      <Text style={[styles.text, { color: textColor }]}>DespensaCerta</Text>
     </View>
   );
 }
