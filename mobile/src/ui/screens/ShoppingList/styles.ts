@@ -11,6 +11,19 @@ export const styles = StyleSheet.create({
     paddingBottom: 16,
     gap: 12,
   },
+  headerRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  addButton: {
+    width: 36,
+    height: 36,
+    borderRadius: 18,
+    backgroundColor: theme.colors.primary,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   progressBar: {
     height: 8,
     backgroundColor: theme.colors.border,
@@ -24,7 +37,6 @@ export const styles = StyleSheet.create({
   },
   listContent: {
     paddingHorizontal: 20,
-    paddingBottom: 24,
   },
   sectionHeader: {
     paddingVertical: 10,
@@ -35,9 +47,9 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: theme.colors.surface,
     borderRadius: theme.radii.md,
-    padding: 14,
+    padding: 12,
     marginBottom: 8,
-    gap: 14,
+    gap: 10,
     shadowColor: '#000',
     shadowOpacity: 0.04,
     shadowRadius: 4,
@@ -60,5 +72,29 @@ export const styles = StyleSheet.create({
   itemInfo: {
     flex: 1,
     gap: 2,
+  },
+  stepper: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 6,
+    flexShrink: 0,
+  },
+  stepperBtn: {
+    width: 26,
+    height: 26,
+    borderRadius: 8,
+    backgroundColor: theme.colors.surface2,
+    borderWidth: 1,
+    borderColor: theme.colors.border,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  stepperCount: {
+    minWidth: 36,
+    textAlign: 'center',
+  },
+  deleteBtn: {
+    padding: 2,
+    flexShrink: 0,
   },
 });
