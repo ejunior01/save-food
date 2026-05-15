@@ -17,7 +17,7 @@ export function Tag({ label, tone = 'neutral', size = 'md', style }: TagProps) {
 
   return (
     <View style={[containerStyle, style]}>
-      <AppText size={size === 'sm' ? 'xs' : 'xs'} family="medium" color={textColor}>
+      <AppText size={size === 'sm' ? 'xs' : 'xs'} family="medium" color={textColor} numberOfLines={1}>
         {label}
       </AppText>
     </View>

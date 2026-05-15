@@ -5,6 +5,7 @@ export const containerVariants = createVariants({
   base: {
     borderRadius: theme.radii.pill,
     alignSelf: 'flex-start',
+    flexShrink: 0,
     flexDirection: 'row',
     alignItems: 'center',
   },

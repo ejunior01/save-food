@@ -17,12 +17,14 @@ export const styles = StyleSheet.create({
     marginBottom: 16,
   },
   filterPill: {
+    minWidth: 82,
     paddingHorizontal: 14,
     paddingVertical: 8,
     borderRadius: theme.radii.pill,
     backgroundColor: theme.colors.surface,
     borderWidth: 1,
     borderColor: theme.colors.border,
+    alignItems: 'center',
   },
   filterPillActive: {
     backgroundColor: theme.colors.primary,

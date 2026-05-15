@@ -8,6 +8,7 @@ import { Tag } from '@ui/components/Tag';
 import { Button } from '@ui/components/Button';
 import { theme } from '@ui/styles/theme';
 import { useAppData, getDaysUntilExpiry, getExpiryStatus, formatExpiryLabel } from '@app/context/AppDataContext';
+import { useDeletePantryItem } from '@app/hooks/mutations/useDeletePantryItem';
 import { styles } from './styles';
 
 type FilterKey = 'all' | 'danger' | 'warning' | 'info';
@@ -23,6 +24,7 @@ export function Alerts() {
   const { top } = useSafeAreaInsets();
   const { pantryItems } = useAppData();
   const [activeFilter, setActiveFilter] = useState<FilterKey>('all');
+  const { deletePantryItem } = useDeletePantryItem();
 
   const filteredItems = useMemo(() => {
     const sorted = [...pantryItems].sort(
@@ -104,14 +106,14 @@ export function Alerts() {
                       variant="secondary"
                       size="sm"
                       label="Usar agora"
-                      onPress={() => {}}
+                      onPress={() => deletePantryItem(item.id)}
                       style={{ flex: 1 }}
                     />
                     <Button
                       variant="ghost"
                       size="sm"
                       label="Descartar"
-                      onPress={() => {}}
+                      onPress={() => deletePantryItem(item.id)}
                       style={{ flex: 1 }}
                     />
                   </View>
