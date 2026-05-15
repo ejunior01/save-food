@@ -1,13 +1,14 @@
 import React, { createContext, useContext, useEffect, useMemo } from 'react';
-import { PantryItem, Recipe, ShoppingItem, ExpiryStatus } from '@app/types';
+import { PantryItem, Recipe, ShoppingItem, ExpiryStatus, StorageLocation } from '@app/types';
 import { usePantryItems } from '@app/hooks/queries/usePantryItems';
 import { useShoppingItems } from '@app/hooks/queries/useShoppingItems';
 import { useRecipes } from '@app/hooks/queries/useRecipes';
+import { useStorageLocations } from '@app/hooks/queries/useStorageLocations';
 import { ShoppingService } from '@app/services/ShoppingService';
 import { queryClient } from '@app/lib/queryClient';
 import { seed } from '@app/storage/StorageSeed';
 
-export type { PantryItem, RecipeIngredient, Recipe, ShoppingItem, ExpiryStatus } from '@app/types';
+export type { PantryItem, RecipeIngredient, Recipe, ShoppingItem, ExpiryStatus, StorageLocation } from '@app/types';
 
 export function getDaysUntilExpiry(expiresAt: Date): number {
   const today = new Date();
@@ -37,6 +38,7 @@ type AppDataContextValue = {
   recipes: Recipe[];
   shoppingItems: ShoppingItem[];
   expiringItems: PantryItem[];
+  storageLocations: StorageLocation[];
   toggleShoppingItem: (id: string) => void;
   getExpiryStatus: typeof getExpiryStatus;
   getDaysUntilExpiry: typeof getDaysUntilExpiry;
@@ -49,12 +51,14 @@ export function AppDataProvider({ children }: { children: React.ReactNode }) {
   const { data: pantryItems = [] } = usePantryItems();
   const { data: recipes = [] } = useRecipes();
   const { data: shoppingItems = [] } = useShoppingItems();
+  const { data: storageLocations = [] } = useStorageLocations();
 
   useEffect(() => {
     seed().then(() => {
       queryClient.invalidateQueries({ queryKey: ['pantry-items'] });
       queryClient.invalidateQueries({ queryKey: ['shopping-items'] });
       queryClient.invalidateQueries({ queryKey: ['recipes'] });
+      queryClient.invalidateQueries({ queryKey: ['storage-locations'] });
     });
   }, []);
 
@@ -79,6 +83,7 @@ export function AppDataProvider({ children }: { children: React.ReactNode }) {
         recipes,
         shoppingItems,
         expiringItems,
+        storageLocations,
         toggleShoppingItem,
         getExpiryStatus,
         getDaysUntilExpiry,

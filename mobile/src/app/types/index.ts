@@ -1,5 +1,16 @@
 export type ExpiryStatus = 'danger' | 'warning' | 'info' | 'success';
 
+export type UserPlan = 'free' | 'premium';
+
+export type StorageLocation = {
+  id: string;
+  name: string;
+  icon: string;
+  isDefault: boolean;
+};
+
+export const DEFAULT_LOCATION_ID = 'loc_pantry';
+
 export type PantryItem = {
   id: string;
   name: string;
@@ -8,6 +19,7 @@ export type PantryItem = {
   quantity: number;
   unit: string;
   emoji: string;
+  locationId: string;
 };
 
 export type RecipeIngredient = {

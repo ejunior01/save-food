@@ -9,7 +9,11 @@ async function load(): Promise<PantryItem[]> {
   const raw = await AsyncStorage.getItem(KEY);
   if (!raw) { return []; }
   const parsed: RawPantryItem[] = JSON.parse(raw);
-  return parsed.map((item) => ({ ...item, expiresAt: new Date(item.expiresAt) }));
+  return parsed.map((item) => ({
+    ...item,
+    locationId: item.locationId ?? 'loc_pantry',
+    expiresAt: new Date(item.expiresAt),
+  }));
 }
 
 async function save(items: PantryItem[]): Promise<void> {

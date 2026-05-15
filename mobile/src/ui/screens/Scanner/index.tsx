@@ -9,8 +9,13 @@ import { useNavigation } from '@react-navigation/native';
 import { AppText } from '@ui/components/AppText';
 import { Button } from '@ui/components/Button';
 import { Input } from '@ui/components/Input';
+import { LocationPicker } from '@ui/components/LocationPicker';
+import { LocationsSheet, type LocationsSheetHandle } from '@ui/components/LocationsSheet';
 import { theme } from '@ui/styles/theme';
 import { useCreatePantryItem } from '@app/hooks/mutations/useCreatePantryItem';
+import { useAppData } from '@app/context/AppDataContext';
+import { useAuth } from '@app/context/AuthContext';
+import { DEFAULT_LOCATION_ID } from '@app/types';
 import { OpenFoodFactsService, OpenFoodFactsProduct } from '@app/services/OpenFoodFactsService';
 import { styles } from './styles';
 
@@ -20,6 +25,8 @@ type ScanState = 'idle' | 'loading' | 'found' | 'not_found';
 export function Scanner() {
   const { top } = useSafeAreaInsets();
   const navigation = useNavigation();
+  const { storageLocations } = useAppData();
+  const { plan, upgradeToPremium } = useAuth();
   const [permission, requestPermission] = useCameraPermissions();
   const [scannedCode, setScannedCode] = useState<string | null>(null);
   const [mode, setMode] = useState<ScanMode>('barcode');
@@ -29,7 +36,9 @@ export function Scanner() {
   const [quantity, setQuantity] = useState('1');
   const [productName, setProductName] = useState('');
   const [manualExpiryDays, setManualExpiryDays] = useState('');
+  const [selectedLocationId, setSelectedLocationId] = useState(DEFAULT_LOCATION_ID);
   const sheetRef = useRef<BottomSheet>(null);
+  const locationsSheetRef = useRef<LocationsSheetHandle>(null);
   const { createPantryItem, isLoading: isSaving } = useCreatePantryItem();
 
   if (!permission) {
@@ -100,6 +109,7 @@ export function Scanner() {
       quantity: parseFloat(quantity) || 1,
       unit: foundProduct.unit,
       expiresAt,
+      locationId: selectedLocationId,
     });
     navigation.goBack();
   }
@@ -118,6 +128,7 @@ export function Scanner() {
       quantity: 1,
       unit: 'un',
       expiresAt,
+      locationId: selectedLocationId,
     });
     setProductName('');
     setManualExpiryDays('');
@@ -219,6 +230,14 @@ export function Scanner() {
               />
             </View>
           </View>
+
+          <LocationPicker
+            locations={storageLocations}
+            selectedId={selectedLocationId}
+            plan={plan}
+            onSelect={setSelectedLocationId}
+            onManage={() => locationsSheetRef.current?.open()}
+          />
 
           <Button
             variant="primary"
@@ -335,6 +354,13 @@ export function Scanner() {
                 onChangeText={setManualExpiryDays}
                 keyboardType="number-pad"
               />
+              <LocationPicker
+                locations={storageLocations}
+                selectedId={selectedLocationId}
+                plan={plan}
+                onSelect={setSelectedLocationId}
+                onManage={() => locationsSheetRef.current?.open()}
+              />
               <Button
                 variant="primary"
                 size="lg"
@@ -348,6 +374,13 @@ export function Scanner() {
           )}
         </BottomSheetView>
       </BottomSheet>
+
+      <LocationsSheet
+        ref={locationsSheetRef}
+        locations={storageLocations}
+        plan={plan}
+        onUpgrade={upgradeToPremium}
+      />
     </View>
   );
 }

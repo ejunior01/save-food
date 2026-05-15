@@ -4,7 +4,7 @@ import { PantryStorage } from './PantryStorage';
 import { ShoppingStorage } from './ShoppingStorage';
 import { RecipesStorage } from './RecipesStorage';
 
-const INITIALIZED_KEY = '@savefood:initialized';
+const INITIALIZED_KEY = '@savefood:initialized_v2';
 
 function addDays(days: number): Date {
   const d = new Date();
@@ -13,18 +13,18 @@ function addDays(days: number): Date {
 }
 
 const PANTRY_ITEMS: PantryItem[] = [
-  { id: 'p1', name: 'Leite', category: 'Laticínios', expiresAt: addDays(-1), quantity: 1, unit: 'L', emoji: '🥛' },
-  { id: 'p2', name: 'Tomate', category: 'Legumes', expiresAt: addDays(0), quantity: 4, unit: 'un', emoji: '🍅' },
-  { id: 'p3', name: 'Queijo', category: 'Laticínios', expiresAt: addDays(1), quantity: 200, unit: 'g', emoji: '🧀' },
-  { id: 'p4', name: 'Pão', category: 'Padaria', expiresAt: addDays(2), quantity: 1, unit: 'un', emoji: '🍞' },
-  { id: 'p5', name: 'Alface', category: 'Folhosas', expiresAt: addDays(3), quantity: 1, unit: 'un', emoji: '🥬' },
-  { id: 'p6', name: 'Banana', category: 'Frutas', expiresAt: addDays(4), quantity: 5, unit: 'un', emoji: '🍌' },
-  { id: 'p7', name: 'Maçã', category: 'Frutas', expiresAt: addDays(5), quantity: 6, unit: 'un', emoji: '🍎' },
-  { id: 'p8', name: 'Iogurte', category: 'Laticínios', expiresAt: addDays(6), quantity: 2, unit: 'un', emoji: '🫙' },
-  { id: 'p9', name: 'Ovo', category: 'Proteínas', expiresAt: addDays(7), quantity: 12, unit: 'un', emoji: '🥚' },
-  { id: 'p10', name: 'Frango', category: 'Proteínas', expiresAt: addDays(1), quantity: 500, unit: 'g', emoji: '🍗' },
-  { id: 'p11', name: 'Cenoura', category: 'Legumes', expiresAt: addDays(3), quantity: 3, unit: 'un', emoji: '🥕' },
-  { id: 'p12', name: 'Peixe', category: 'Proteínas', expiresAt: addDays(10), quantity: 300, unit: 'g', emoji: '🐟' },
+  { id: 'p1', name: 'Leite', category: 'Laticínios', expiresAt: addDays(-1), quantity: 1, unit: 'L', emoji: '🥛', locationId: 'loc_pantry' },
+  { id: 'p2', name: 'Tomate', category: 'Legumes', expiresAt: addDays(0), quantity: 4, unit: 'un', emoji: '🍅', locationId: 'loc_pantry' },
+  { id: 'p3', name: 'Queijo', category: 'Laticínios', expiresAt: addDays(1), quantity: 200, unit: 'g', emoji: '🧀', locationId: 'loc_pantry' },
+  { id: 'p4', name: 'Pão', category: 'Padaria', expiresAt: addDays(2), quantity: 1, unit: 'un', emoji: '🍞', locationId: 'loc_pantry' },
+  { id: 'p5', name: 'Alface', category: 'Folhosas', expiresAt: addDays(3), quantity: 1, unit: 'un', emoji: '🥬', locationId: 'loc_pantry' },
+  { id: 'p6', name: 'Banana', category: 'Frutas', expiresAt: addDays(4), quantity: 5, unit: 'un', emoji: '🍌', locationId: 'loc_pantry' },
+  { id: 'p7', name: 'Maçã', category: 'Frutas', expiresAt: addDays(5), quantity: 6, unit: 'un', emoji: '🍎', locationId: 'loc_pantry' },
+  { id: 'p8', name: 'Iogurte', category: 'Laticínios', expiresAt: addDays(6), quantity: 2, unit: 'un', emoji: '🫙', locationId: 'loc_pantry' },
+  { id: 'p9', name: 'Ovo', category: 'Proteínas', expiresAt: addDays(7), quantity: 12, unit: 'un', emoji: '🥚', locationId: 'loc_pantry' },
+  { id: 'p10', name: 'Frango', category: 'Proteínas', expiresAt: addDays(1), quantity: 500, unit: 'g', emoji: '🍗', locationId: 'loc_pantry' },
+  { id: 'p11', name: 'Cenoura', category: 'Legumes', expiresAt: addDays(3), quantity: 3, unit: 'un', emoji: '🥕', locationId: 'loc_pantry' },
+  { id: 'p12', name: 'Peixe', category: 'Proteínas', expiresAt: addDays(10), quantity: 300, unit: 'g', emoji: '🐟', locationId: 'loc_pantry' },
 ];
 
 const RECIPES: Recipe[] = [
