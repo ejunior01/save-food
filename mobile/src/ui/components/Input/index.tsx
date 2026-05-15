@@ -10,6 +10,7 @@ type InputProps = Omit<TextInputProps, 'style'> & {
   leftIcon?: React.ReactNode;
   rightElement?: React.ReactNode;
   style?: StyleProp<ViewStyle>;
+  InputComponent?: React.ComponentType<any>;
 }
 
 export function Input({
@@ -20,6 +21,7 @@ export function Input({
   style,
   onFocus,
   onBlur,
+  InputComponent = TextInput,
   ...rest
 }: InputProps) {
   const [isFocused, setIsFocused] = useState(false);
@@ -40,14 +42,14 @@ export function Input({
         ]}
       >
         {leftIcon}
-        <TextInput
+        <InputComponent
           style={styles.input}
           placeholderTextColor={theme.colors.textMuted}
-          onFocus={(e) => {
+          onFocus={(e: any) => {
             setIsFocused(true);
             onFocus?.(e);
           }}
-          onBlur={(e) => {
+          onBlur={(e: any) => {
             setIsFocused(false);
             onBlur?.(e);
           }}

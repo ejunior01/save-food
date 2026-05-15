@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:unsplash.com)",
+      "Bash(curl -L \"https://images.unsplash.com/photo-1488459716781-31db52582fe9?fm=jpg&q=80&w=1080&auto=format&fit=crop\" -o \"e:/projetos/save-food/mobile/src/ui/assets/onboarding/slide1.jpg\" --max-time 30)",
+      "Bash(curl -L \"https://images.unsplash.com/photo-1617510711388-6f88e078d698?fm=jpg&q=80&w=1080&auto=format&fit=crop\" -o \"e:/projetos/save-food/mobile/src/ui/assets/onboarding/slide2.jpg\" --max-time 30)",
+      "Bash(curl -L \"https://images.unsplash.com/photo-1556911073-a517e752729c?fm=jpg&q=80&w=1080&auto=format&fit=crop\" -o \"e:/projetos/save-food/mobile/src/ui/assets/onboarding/slide3.jpg\" --max-time 30)"
+    ]
+  }
+}

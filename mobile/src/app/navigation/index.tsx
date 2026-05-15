@@ -1,6 +1,7 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { QueryClientProvider } from '@tanstack/react-query';
+import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 
 import { queryClient } from '@app/lib/queryClient';
 import { AuthProvider } from '@app/context/AuthContext';
@@ -12,9 +13,11 @@ export function Navigation() {
     <QueryClientProvider client={queryClient}>
       <AuthProvider>
         <AppDataProvider>
-          <NavigationContainer>
-            <RootStack />
-          </NavigationContainer>
+          <BottomSheetModalProvider>
+            <NavigationContainer>
+              <RootStack />
+            </NavigationContainer>
+          </BottomSheetModalProvider>
         </AppDataProvider>
       </AuthProvider>
     </QueryClientProvider>
