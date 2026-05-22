@@ -47,7 +47,7 @@ export function Login({ navigation }: Props) {
         <View style={[styles.content, { paddingTop: top + 16, paddingBottom: bottom + 16 }]}>
           {/* Logo */}
           <View style={styles.logoArea}>
-            <Logo />
+            <Logo  />
           </View>
 
           {/* CTA */}

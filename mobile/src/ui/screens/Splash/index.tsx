@@ -15,7 +15,7 @@ export function Splash() {
         transition={{ type: 'timing', duration: 500 }}
         style={styles.content}
       >
-        <Logo textColor="#fff" />
+        <Logo inverted />
         <AppText size="sm" color="rgba(255,255,255,0.6)" align="center" style={styles.tagline}>
           Menos desperdício, mais economia.
         </AppText>

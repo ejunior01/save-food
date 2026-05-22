@@ -7,7 +7,7 @@ export const styles = StyleSheet.create({
     backgroundColor: theme.colors.background,
   },
   hero: {
-    height: 240,
+    height: 280,
     backgroundColor: theme.colors.success.soft,
     alignItems: 'center',
     justifyContent: 'center',

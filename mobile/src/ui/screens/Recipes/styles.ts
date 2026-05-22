@@ -8,16 +8,16 @@ export const styles = StyleSheet.create({
   },
   header: {
     paddingHorizontal: 20,
-    paddingBottom: 12,
-    gap: 12,
+    paddingBottom: 16,
+    gap: 16,
   },
   filterScroll: {
     paddingHorizontal: 20,
     gap: 8,
-    marginBottom: 16,
+    marginBottom: 20,
   },
   filterPill: {
-    paddingHorizontal: 14,
+    paddingHorizontal: 16,
     paddingVertical: 8,
     borderRadius: theme.radii.pill,
     backgroundColor: theme.colors.surface,
@@ -28,35 +28,87 @@ export const styles = StyleSheet.create({
     backgroundColor: theme.colors.primary,
     borderColor: theme.colors.primary,
   },
+  // Featured card
   featuredCard: {
     marginHorizontal: 20,
-    marginBottom: 16,
-    backgroundColor: theme.colors.primary,
+    marginBottom: 28,
     borderRadius: theme.radii.lg,
-    padding: 20,
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 16,
+    overflow: 'hidden',
+    shadowColor: '#000',
+    shadowOpacity: 0.14,
+    shadowRadius: 16,
+    shadowOffset: { width: 0, height: 6 },
+    elevation: 6,
   },
-  featuredInfo: {
-    flex: 1,
+  featuredBg: {
+    height: 240,
+    backgroundColor: theme.colors.primary,
+    justifyContent: 'flex-end',
+  },
+  featuredImage: {
+    borderRadius: theme.radii.lg,
+  },
+  featuredEmojiFallback: {
+    ...StyleSheet.absoluteFillObject,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: theme.colors.primary,
+  },
+  featuredGradient: {
+    padding: 20,
     gap: 6,
   },
-  gridContent: {
-    paddingHorizontal: 20,
-    gap: 12,
-    paddingBottom: 24,
+  featuredMeta: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 6,
+    marginTop: 2,
   },
-  gridCard: {
-    flex: 1,
+  // List section
+  listSection: {
+    paddingHorizontal: 20,
+    paddingBottom: 32,
+  },
+  listTitle: {
+    marginBottom: 14,
+  },
+  // Recipe card
+  recipeCard: {
+    flexDirection: 'row',
     backgroundColor: theme.colors.surface,
     borderRadius: theme.radii.md,
-    padding: 14,
-    alignItems: 'center',
-    gap: 8,
+    marginBottom: 12,
+    overflow: 'hidden',
     shadowColor: '#000',
-    shadowOpacity: 0.04,
-    shadowRadius: 6,
+    shadowOpacity: 0.05,
+    shadowRadius: 8,
+    shadowOffset: { width: 0, height: 2 },
     elevation: 2,
+  },
+  recipeThumb: {
+    width: 100,
+    height: 100,
+  },
+  recipeThumbFallback: {
+    backgroundColor: theme.colors.success.soft,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  recipeInfo: {
+    flex: 1,
+    paddingHorizontal: 14,
+    paddingVertical: 12,
+    gap: 4,
+    justifyContent: 'center',
+  },
+  recipeTitle: {
+    lineHeight: 22,
+    marginTop: 2,
+  },
+  recipeMeta: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 4,
+    marginTop: 6,
   },
 });

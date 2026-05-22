@@ -1,10 +1,11 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { PantryItem, ShoppingItem, Recipe } from '@app/types';
-import { PantryStorage } from './PantryStorage';
-import { ShoppingStorage } from './ShoppingStorage';
-import { RecipesStorage } from './RecipesStorage';
+import { PantryItem, Recipe, ShoppingItem } from '@app/types';
 
-const INITIALIZED_KEY = '@savefood:initialized_v2';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { PantryStorage } from './PantryStorage';
+import { RecipesStorage } from './RecipesStorage';
+import { ShoppingStorage } from './ShoppingStorage';
+
+const INITIALIZED_KEY = '@savefood:initialized_v3';
 
 function addDays(days: number): Date {
   const d = new Date();
@@ -35,6 +36,7 @@ const RECIPES: Recipe[] = [
     servings: 2,
     category: 'Massas',
     emoji: '🍝',
+    imageUrl: 'https://todeschinialimentos.com.br/images/receitas/22/todeschini-imagem-receitas-macarrao-com-tomate-cereja-e-queijo-1-xl.webp',
     ingredients: [
       { name: 'Macarrão', amount: '200g' },
       { name: 'Tomate', amount: '3 un' },
@@ -55,6 +57,7 @@ const RECIPES: Recipe[] = [
     servings: 4,
     category: 'Café da manhã',
     emoji: '🥞',
+    imageUrl: 'https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?auto=format&fit=crop&w=800&q=80',
     ingredients: [
       { name: 'Banana', amount: '2 un' },
       { name: 'Ovo', amount: '2 un' },
@@ -75,6 +78,7 @@ const RECIPES: Recipe[] = [
     servings: 2,
     category: 'Saladas',
     emoji: '🥗',
+    imageUrl: 'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=800&q=80',
     ingredients: [
       { name: 'Alface', amount: '1 pé' },
       { name: 'Tomate', amount: '2 un' },
@@ -93,6 +97,7 @@ const RECIPES: Recipe[] = [
     servings: 4,
     category: 'Sopas',
     emoji: '🍲',
+    imageUrl: 'https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=800&q=80',
     ingredients: [
       { name: 'Cenoura', amount: '2 un' },
       { name: 'Frango', amount: '300g' },
@@ -113,6 +118,7 @@ const RECIPES: Recipe[] = [
     servings: 1,
     category: 'Café da manhã',
     emoji: '🍳',
+    imageUrl: 'https://images.unsplash.com/photo-1525351484163-7529414344d8?auto=format&fit=crop&w=800&q=80',
     ingredients: [
       { name: 'Pão', amount: '2 fatias' },
       { name: 'Ovo', amount: '2 un' },

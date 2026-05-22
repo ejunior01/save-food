@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Pressable, ScrollView, StatusBar, Text, View } from 'react-native';
+import { ImageBackground, Pressable, ScrollView, StatusBar, StyleSheet, Text, View } from 'react-native';
+import { LinearGradient } from 'expo-linear-gradient';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { ChevronLeft, Check } from 'lucide-react-native';
 
@@ -45,15 +46,29 @@ export function RecipeDetail({ route, navigation }: Props) {
       <StatusBar barStyle="dark-content" backgroundColor={theme.colors.success.soft} />
 
       {/* Hero */}
-      <View style={[styles.hero, { paddingTop: top }]}>
-        <ProductImage emoji={recipe.emoji} size={120} />
+      <ImageBackground
+        source={recipe.imageUrl ? { uri: recipe.imageUrl } : undefined}
+        style={styles.hero}
+      >
+        {recipe.imageUrl ? (
+          <LinearGradient
+            colors={['rgba(0,0,0,0.28)', 'transparent']}
+            style={StyleSheet.absoluteFill}
+          />
+        ) : (
+          <ProductImage emoji={recipe.emoji} size={120} />
+        )}
         <Pressable
           style={[styles.backButton, { top: top + 8 }]}
           onPress={() => navigation.goBack()}
         >
-          <ChevronLeft size={22} color={theme.colors.text} strokeWidth={2} />
+          <ChevronLeft
+            size={22}
+            color={recipe.imageUrl ? '#fff' : theme.colors.text}
+            strokeWidth={2}
+          />
         </Pressable>
-      </View>
+      </ImageBackground>
 
       {/* Card */}
       <ScrollView

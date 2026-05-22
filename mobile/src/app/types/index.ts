@@ -34,6 +34,7 @@ export type Recipe = {
   servings: number;
   category: string;
   emoji: string;
+  imageUrl?: string;
   ingredients: RecipeIngredient[];
   steps: string[];
 };
