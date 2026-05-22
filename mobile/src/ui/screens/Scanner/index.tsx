@@ -17,6 +17,7 @@ import { useAppData } from '@app/context/AppDataContext';
 import { useAuth } from '@app/context/AuthContext';
 import { DEFAULT_LOCATION_ID } from '@app/types';
 import { OpenFoodFactsService, OpenFoodFactsProduct } from '@app/services/OpenFoodFactsService';
+import { getCategoryIcon } from '@app/utils/categories';
 import { styles } from './styles';
 
 type ScanMode = 'barcode' | 'manual';
@@ -193,7 +194,7 @@ export function Scanner() {
       return (
         <View style={{ gap: 12 }}>
           <View style={{ flexDirection: 'row', alignItems: 'center', gap: 12 }}>
-            <Text style={{ fontSize: 40 }}>{foundProduct.emoji}</Text>
+            <Text style={{ fontSize: 40 }}>{getCategoryIcon(foundProduct.category)}</Text>
             <View style={{ flex: 1 }}>
               <AppText size="base" family="semiBold" numberOfLines={2}>
                 {foundProduct.name}

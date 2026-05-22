@@ -1,4 +1,5 @@
 import { openFoodFactsApi } from '@app/lib/api';
+import { getCategoryIcon } from '@app/utils/categories';
 
 export type OpenFoodFactsProduct = {
   barcode: string;
@@ -10,19 +11,25 @@ export type OpenFoodFactsProduct = {
   unit: string;
 };
 
-function categoryToEmoji(tags: string[]): string {
-  const tag = (tags[0] ?? '').toLowerCase();
-  if (tag.includes('milk') || tag.includes('dairy') || tag.includes('laticini')) { return '🥛'; }
-  if (tag.includes('fruit')) { return '🍎'; }
-  if (tag.includes('vegetable') || tag.includes('legume')) { return '🥕'; }
-  if (tag.includes('bread') || tag.includes('bakery')) { return '🍞'; }
-  if (tag.includes('meat') || tag.includes('chicken') || tag.includes('protein')) { return '🍗'; }
-  if (tag.includes('fish') || tag.includes('seafood')) { return '🐟'; }
-  if (tag.includes('egg')) { return '🥚'; }
-  if (tag.includes('beverage') || tag.includes('drink') || tag.includes('juice')) { return '🧃'; }
-  if (tag.includes('chocolate') || tag.includes('candy') || tag.includes('sweet')) { return '🍫'; }
-  if (tag.includes('cereal') || tag.includes('grain')) { return '🌾'; }
-  return '🛒';
+function tagsToCategory(tags: string[]): string {
+  const tag = tags.map((t) => t.toLowerCase()).join(' ');
+  if (tag.includes('milk') || tag.includes('dairy') || tag.includes('laticini') || tag.includes('fromage') || tag.includes('cheese') || tag.includes('yogurt')) { return 'Laticínios'; }
+  if (tag.includes('fruit')) { return 'Frutas'; }
+  if (tag.includes('vegetable') || tag.includes('legume') || tag.includes('vegetal')) { return 'Legumes'; }
+  if (tag.includes('bread') || tag.includes('bakery') || tag.includes('padaria')) { return 'Padaria'; }
+  if (tag.includes('pasta') || tag.includes('noodle') || tag.includes('macarr')) { return 'Massas'; }
+  if (tag.includes('meat') || tag.includes('chicken') || tag.includes('beef') || tag.includes('pork')) { return 'Proteínas'; }
+  if (tag.includes('fish') || tag.includes('seafood') || tag.includes('peixe')) { return 'Peixes'; }
+  if (tag.includes('egg')) { return 'Ovos'; }
+  if (tag.includes('juice') || tag.includes('suco')) { return 'Sucos'; }
+  if (tag.includes('beverage') || tag.includes('drink') || tag.includes('bebida')) { return 'Bebidas'; }
+  if (tag.includes('chocolate') || tag.includes('candy') || tag.includes('sweet') || tag.includes('confect')) { return 'Doces'; }
+  if (tag.includes('snack') || tag.includes('chip') || tag.includes('crisp')) { return 'Snacks'; }
+  if (tag.includes('cereal') || tag.includes('grain') || tag.includes('rice') || tag.includes('bean')) { return 'Grãos'; }
+  if (tag.includes('frozen')) { return 'Congelados'; }
+  if (tag.includes('can') || tag.includes('conserv')) { return 'Enlatados'; }
+  if (tag.includes('spice') || tag.includes('sauce') || tag.includes('condiment')) { return 'Temperos'; }
+  return 'Geral';
 }
 
 function parseQuantity(raw?: string): { quantity: number; unit: string } {
@@ -45,7 +52,7 @@ export const OpenFoodFactsService = {
     if (!name) { return null; }
 
     const categoryTags: string[] = p.categories_tags ?? [];
-    const category: string = p.categories?.split(',')[0]?.trim() ?? 'Geral';
+    const category = tagsToCategory(categoryTags);
     const { quantity, unit } = parseQuantity(p.quantity as string | undefined);
 
     return {
@@ -53,7 +60,7 @@ export const OpenFoodFactsService = {
       name,
       brand: (p.brands as string) ?? '',
       category,
-      emoji: categoryToEmoji(categoryTags),
+      emoji: getCategoryIcon(category),
       quantity,
       unit,
     };

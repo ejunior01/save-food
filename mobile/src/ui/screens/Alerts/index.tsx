@@ -8,6 +8,7 @@ import { Tag } from '@ui/components/Tag';
 import { Button } from '@ui/components/Button';
 import { theme } from '@ui/styles/theme';
 import { useAppData, getDaysUntilExpiry, getExpiryStatus, formatExpiryLabel } from '@app/context/AppDataContext';
+import { getCategoryIcon } from '@app/utils/categories';
 import { useDeletePantryItem } from '@app/hooks/mutations/useDeletePantryItem';
 import { styles } from './styles';
 
@@ -90,7 +91,7 @@ export function Alerts() {
             return (
               <View style={styles.alertCard}>
                 <View style={styles.alertCardTop}>
-                  <ProductImage emoji={item.emoji} size={52} />
+                  <ProductImage emoji={getCategoryIcon(item.category)} size={52} />
                   <View style={styles.alertInfo}>
                     <AppText size="base" family="semiBold">{item.name}</AppText>
                     <AppText size="sm" color={theme.colors.textMuted}>

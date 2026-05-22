@@ -16,6 +16,7 @@ import { ProductImage } from '@ui/components/ProductImage';
 import { Tag } from '@ui/components/Tag';
 import { theme } from '@ui/styles/theme';
 import { useAppData, getDaysUntilExpiry, getExpiryStatus, formatExpiryLabel } from '@app/context/AppDataContext';
+import { getCategoryIcon } from '@app/utils/categories';
 import { AppStackNavigationProps } from '@app/navigation/types';
 import { styles } from './styles';
 
@@ -124,7 +125,7 @@ export function Home() {
             const status = getExpiryStatus(item.expiresAt);
             return (
               <View style={styles.expiringCard}>
-                <ProductImage emoji={item.emoji} size={48} />
+                <ProductImage emoji={getCategoryIcon(item.category)} size={48} />
                 <AppText size="sm" family="medium" numberOfLines={1}>
                   {item.name}
                 </AppText>
