@@ -54,20 +54,18 @@ export function Login({ navigation }: Props) {
           <View style={styles.ctaArea}>
             <View>
               <AppText
-                size="2xl"
-                family="semiBold"
+                family="displayItalic"
                 color="#fff"
-                style={styles.headline}
+                style={{ fontSize: 34, lineHeight: 42, letterSpacing: -0.5 }}
               >
-                Organize seus alimentos,
+                Organize seus{'\n'}alimentos.
               </AppText>
               <AppText
-                size="2xl"
-                family="semiBold"
-                color="#fff"
-                style={[styles.headline, { textAlign: 'center' }]}
+                size="base"
+                color="rgba(255,255,255,0.72)"
+                style={{ marginTop: 10, lineHeight: 24 }}
               >
-                Reduza o desperdício. Economize.
+                Reduza o desperdício e economize com sua despensa.
               </AppText>
             </View>
             <View style={styles.actions}>

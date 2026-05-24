@@ -11,6 +11,9 @@ importers:
       '@expo-google-fonts/host-grotesk':
         specifier: ^0.4.1
         version: 0.4.1
+      '@expo-google-fonts/instrument-serif':
+        specifier: ^0.4.1
+        version: 0.4.1
       '@gorhom/bottom-sheet':
         specifier: ^5.2.13
         version: 5.2.13(@types/react@19.2.14)(react-native-gesture-handler@2.30.1(react-native@0.83.6(@babel/core@7.29.0)(@react-native/metro-config@0.85.2(@babel/core@7.29.0))(@types/react@19.2.14)(react@19.2.0))(react@19.2.0))(react-native-reanimated@4.2.1(react-native-worklets@0.7.4(@babel/core@7.29.0)(react-native@0.83.6(@babel/core@7.29.0)(@react-native/metro-config@0.85.2(@babel/core@7.29.0))(@types/react@19.2.14)(react@19.2.0))(react@19.2.0))(react-native@0.83.6(@babel/core@7.29.0)(@react-native/metro-config@0.85.2(@babel/core@7.29.0))(@types/react@19.2.14)(react@19.2.0))(react@19.2.0))(react-native@0.83.6(@babel/core@7.29.0)(@react-native/metro-config@0.85.2(@babel/core@7.29.0))(@types/react@19.2.14)(react@19.2.0))(react@19.2.0)
@@ -718,6 +721,9 @@ packages:
 
   '@expo-google-fonts/host-grotesk@0.4.1':
     resolution: {integrity: sha512-pwac6+FOLyP0qumpl8EGVU5tsmXCWijWFimtjYnJW4RUFkngZZMjEWuxu1o0vcyEH8mPjGfL94ls5pW3RVK10g==}
+
+  '@expo-google-fonts/instrument-serif@0.4.1':
+    resolution: {integrity: sha512-1CgCrLbTSgE7RV8ZrTT7i06UAyNQDBrhxQuxkReNnfq5yvUhTmvpOK17grlEsXG5p04lJ1ZXGiIjPeHo6X0sXg==}
 
   '@expo/cli@55.0.28':
     resolution: {integrity: sha512-N3ZdMc5h9BZE2jn9O8xR2umJij+C7h1BMhZATw37zuTbh/JIcqBdfY5xRbpnMGw0VvNdK15nh89NYc8SzLUtow==}
@@ -4503,6 +4509,8 @@ snapshots:
       levn: 0.4.1
 
   '@expo-google-fonts/host-grotesk@0.4.1': {}
+
+  '@expo-google-fonts/instrument-serif@0.4.1': {}
 
   '@expo/cli@55.0.28(@expo/dom-webview@55.0.5)(expo-constants@55.0.15(expo@55.0.20)(react-native@0.83.6(@babel/core@7.29.0)(@react-native/metro-config@0.85.2(@babel/core@7.29.0))(@types/react@19.2.14)(react@19.2.0)))(expo-font@55.0.6(expo@55.0.20)(react-native@0.83.6(@babel/core@7.29.0)(@react-native/metro-config@0.85.2(@babel/core@7.29.0))(@types/react@19.2.14)(react@19.2.0))(react@19.2.0))(expo@55.0.20)(react-dom@19.2.5(react@19.2.0))(react-native@0.83.6(@babel/core@7.29.0)(@react-native/metro-config@0.85.2(@babel/core@7.29.0))(@types/react@19.2.14)(react@19.2.0))(react@19.2.0)(typescript@5.9.3)':
     dependencies:

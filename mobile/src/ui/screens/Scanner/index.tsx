@@ -317,7 +317,7 @@ export function Scanner() {
         ref={sheetRef}
         index={0}
         snapPoints={['28%', '65%']}
-        backgroundStyle={{ backgroundColor: theme.colors.surface }}
+        backgroundStyle={{ backgroundColor: theme.colors.background }}
         handleIndicatorStyle={{ backgroundColor: theme.colors.border, width: 40 }}
       >
         <BottomSheetView style={styles.sheetContent}>

@@ -1,27 +1,35 @@
 const colors = {
   white: '#FFFFFF',
-  primary: '#3DA672',
-  background: '#F4F6F2',
+  primary: '#1F4D2E',
+  background: '#FAF5EB',
   surface: '#FFFFFF',
-  surface2: '#F9FAF7',
-  text: '#0F1714',
-  textMuted: 'rgba(15,23,20,0.58)',
-  border: 'rgba(15,23,20,0.08)',
+  surface2: '#F6F0E2',
+  text: '#1A2B1F',
+  textMuted: 'rgba(26,43,31,0.52)',
+  border: 'rgba(26,43,31,0.1)',
+  block: {
+    pistachio: '#D5E2A8',
+    cream: '#F0E6CF',
+    peach: '#F2C57C',
+    rose: '#EAB5A8',
+    sage: '#C8D9B5',
+    charcoal: '#2D3B32',
+  },
   success: {
-    DEFAULT: '#3DA672',
-    soft: '#E8F5EE',
+    DEFAULT: '#5C8D4A',
+    soft: '#E2EBD2',
   },
   warning: {
-    DEFAULT: '#F5A524',
-    soft: '#FEF5E4',
+    DEFAULT: '#B5901E',
+    soft: '#F3E9C3',
   },
   danger: {
-    DEFAULT: '#E5484D',
-    soft: '#FDEAEA',
+    DEFAULT: '#B33A3A',
+    soft: '#F3D6D2',
   },
   info: {
-    DEFAULT: '#3E7BFA',
-    soft: '#EAF0FF',
+    DEFAULT: '#C97A2D',
+    soft: '#F6E0C8',
   },
   gray: {
     100: '#fafafa',
@@ -46,6 +54,10 @@ const fontFamily = {
     medium: 'HostGrotesk_500Medium',
     semiBold: 'HostGrotesk_600SemiBold',
   },
+  display: {
+    regular: 'InstrumentSerif_400Regular',
+    italic: 'InstrumentSerif_400Regular_Italic',
+  },
 } as const;
 
 const fontSize = {
@@ -55,14 +67,16 @@ const fontSize = {
   lg: 20,
   xl: 24,
   '2xl': 28,
-  '3xl': 32,
+  '3xl': 36,
+  '4xl': 44,
 } as const;
 
 const radii = {
-  sm: 8,
+  xs: 6,
+  sm: 10,
   md: 14,
-  lg: 20,
-  xl: 28,
+  lg: 22,
+  xl: 30,
   pill: 999,
 } as const;
 

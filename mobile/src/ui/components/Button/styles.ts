@@ -10,11 +10,11 @@ export const containerVariants = createVariants({
   },
   variants: {
     variant: {
-      primary: { backgroundColor: theme.colors.primary },
+      primary: { backgroundColor: theme.colors.text },
       secondary: {
-        backgroundColor: theme.colors.surface2,
-        borderWidth: 1,
-        borderColor: theme.colors.border,
+        backgroundColor: 'transparent',
+        borderWidth: 1.5,
+        borderColor: theme.colors.text,
       },
       ghost: {
         backgroundColor: 'transparent',
@@ -26,18 +26,18 @@ export const containerVariants = createVariants({
     size: {
       sm: {
         minHeight: 36,
-        paddingHorizontal: 12,
-        borderRadius: theme.radii.md,
+        paddingHorizontal: 16,
+        borderRadius: theme.radii.pill,
       },
       md: {
         minHeight: 44,
-        paddingHorizontal: 16,
-        borderRadius: theme.radii.lg,
+        paddingHorizontal: 20,
+        borderRadius: theme.radii.pill,
       },
       lg: {
-        minHeight: 56,
-        paddingHorizontal: 20,
-        borderRadius: theme.radii.lg,
+        minHeight: 54,
+        paddingHorizontal: 24,
+        borderRadius: theme.radii.pill,
       },
     },
   },
@@ -50,7 +50,8 @@ export const containerVariants = createVariants({
 export const labelVariants = createVariants({
   base: {
     includeFontPadding: false,
-    fontFamily: theme.fontFamily.sans.semiBold,
+    fontFamily: theme.fontFamily.sans.medium,
+    letterSpacing: 0.2,
   },
   variants: {
     variant: {

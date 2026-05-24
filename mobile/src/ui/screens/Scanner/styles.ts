@@ -30,7 +30,7 @@ export const styles = StyleSheet.create({
     height: 36,
     borderTopWidth: 3,
     borderLeftWidth: 3,
-    borderColor: theme.colors.primary,
+    borderColor: theme.colors.block.pistachio,
     borderTopLeftRadius: 4,
   },
   cornerTR: {
@@ -41,7 +41,7 @@ export const styles = StyleSheet.create({
     height: 36,
     borderTopWidth: 3,
     borderRightWidth: 3,
-    borderColor: theme.colors.primary,
+    borderColor: theme.colors.block.pistachio,
     borderTopRightRadius: 4,
   },
   cornerBL: {
@@ -52,7 +52,7 @@ export const styles = StyleSheet.create({
     height: 36,
     borderBottomWidth: 3,
     borderLeftWidth: 3,
-    borderColor: theme.colors.primary,
+    borderColor: theme.colors.block.pistachio,
     borderBottomLeftRadius: 4,
   },
   cornerBR: {
@@ -63,7 +63,7 @@ export const styles = StyleSheet.create({
     height: 36,
     borderBottomWidth: 3,
     borderRightWidth: 3,
-    borderColor: theme.colors.primary,
+    borderColor: theme.colors.block.pistachio,
     borderBottomRightRadius: 4,
   },
   header: {

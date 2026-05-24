@@ -8,6 +8,7 @@ export const containerVariants = createVariants({
     flexShrink: 0,
     flexDirection: 'row',
     alignItems: 'center',
+    gap: 5,
   },
   variants: {
     tone: {
@@ -15,11 +16,11 @@ export const containerVariants = createVariants({
       warning: { backgroundColor: theme.colors.warning.soft },
       danger: { backgroundColor: theme.colors.danger.soft },
       info: { backgroundColor: theme.colors.info.soft },
-      neutral: { backgroundColor: theme.colors.border },
+      neutral: { backgroundColor: theme.colors.surface2 },
       primary: { backgroundColor: theme.colors.primary },
     },
     size: {
-      sm: { paddingHorizontal: 8, paddingVertical: 2 },
+      sm: { paddingHorizontal: 8, paddingVertical: 3 },
       md: { paddingHorizontal: 10, paddingVertical: 4 },
     },
   },
@@ -28,6 +29,15 @@ export const containerVariants = createVariants({
     size: 'md',
   },
 });
+
+export const toneDotColors: Record<string, string> = {
+  success: theme.colors.success.DEFAULT,
+  warning: theme.colors.warning.DEFAULT,
+  danger: theme.colors.danger.DEFAULT,
+  info: theme.colors.info.DEFAULT,
+  neutral: theme.colors.textMuted,
+  primary: 'rgba(255,255,255,0.7)',
+};
 
 export const toneTextColors: Record<string, string> = {
   success: theme.colors.success.DEFAULT,
