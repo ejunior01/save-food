@@ -1,4 +1,5 @@
-export type ExpiryStatus = 'danger' | 'warning' | 'info' | 'success';
+// expired=vencido · urgent=1-5d · soon=6-15d · planned=16-30d · safe=30d+
+export type ExpiryStatus = 'expired' | 'urgent' | 'soon' | 'planned' | 'safe';
 
 export type UserPlan = 'free' | 'premium';
 
@@ -20,11 +21,14 @@ export type PantryItem = {
   unit: string;
   emoji: string;
   locationId: string;
+  photo?: string;
 };
 
 export type RecipeIngredient = {
   name: string;
   amount: string;
+  have?: boolean;
+  urgent?: boolean;
 };
 
 export type Recipe = {
@@ -34,7 +38,13 @@ export type Recipe = {
   servings: number;
   category: string;
   emoji: string;
+  photo?: string;
   imageUrl?: string;
+  reason?: string;
+  have?: number;
+  total?: number;
+  missing?: string[];
+  level?: string;
   ingredients: RecipeIngredient[];
   steps: string[];
 };
@@ -46,4 +56,6 @@ export type ShoppingItem = {
   unit: string;
   category: string;
   checked: boolean;
+  source?: 'manual' | 'recipe' | 'replenishment';
+  duplicate?: boolean;
 };

@@ -1,170 +1,317 @@
-import React, { useState, useMemo } from 'react';
-import { FlatList, Pressable, ScrollView, StatusBar, View } from 'react-native';
+import React, { useMemo, useState } from 'react';
+import {
+  Image,
+  Pressable,
+  ScrollView,
+  StatusBar,
+  Text,
+  View,
+} from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { Trash2, ChevronRight } from 'lucide-react-native';
+import { useNavigation } from '@react-navigation/native';
+import { ArrowLeft, Filter } from 'lucide-react-native';
 
-import { AppText } from '@ui/components/AppText';
 import { Tag } from '@ui/components/Tag';
+import { ActionSheet } from '@ui/components/ActionSheet';
 import { theme } from '@ui/styles/theme';
-import { useAppData, getDaysUntilExpiry, getExpiryStatus, formatExpiryLabel } from '@app/context/AppDataContext';
-import { getCategoryIcon } from '@app/utils/categories';
+import {
+  useAppData,
+  getDaysUntilExpiry,
+  getExpiryStatus,
+  formatExpiryLabel,
+} from '@app/context/AppDataContext';
+import { getCategoryColor, getLocationName } from '@app/utils/categories';
+import { PantryItem, ExpiryStatus } from '@app/types';
 import { useDeletePantryItem } from '@app/hooks/mutations/useDeletePantryItem';
+import { useUpdatePantryItem } from '@app/hooks/mutations/useUpdatePantryItem';
 
-type FilterKey = 'all' | 'danger' | 'warning' | 'info';
+type FilterKey = 'all' | ExpiryStatus;
 
-const FILTERS: Array<{ key: FilterKey; label: string }> = [
-  { key: 'all', label: 'Todos' },
-  { key: 'danger', label: 'Vencidos' },
-  { key: 'warning', label: 'Urgente' },
-  { key: 'info', label: 'Atenção' },
+const FILTERS: Array<{ id: FilterKey; label: string }> = [
+  { id: 'all',     label: 'Todos' },
+  { id: 'expired', label: 'Vencidos' },
+  { id: 'urgent',  label: 'Urgentes' },
+  { id: 'soon',    label: 'Próximos' },
+  { id: 'safe',    label: 'Seguros' },
 ];
+
+const GROUP_META: Record<ExpiryStatus, { title: string; caption: string; accent: string }> = {
+  expired: { title: 'Vencidos',     caption: 'descarte ou registre', accent: theme.colors.danger },
+  urgent:  { title: 'Urgentes',     caption: '1 a 5 dias',           accent: theme.colors.urgent },
+  soon:    { title: 'Próximos',     caption: '6 a 15 dias',          accent: theme.colors.soon },
+  planned: { title: 'Programados',  caption: '16 a 30 dias',         accent: theme.colors.ink },
+  safe:    { title: 'Seguros',      caption: 'mais de 30 dias',      accent: theme.colors.safe },
+};
+
+function FoodRow({ item, onPress }: { item: PantryItem; onPress: () => void }) {
+  const days = getDaysUntilExpiry(item.expiresAt);
+  const status = getExpiryStatus(item.expiresAt);
+  return (
+    <Pressable
+      onPress={onPress}
+      style={({ pressed }) => ({
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: 14,
+        backgroundColor: theme.colors.surface,
+        padding: 12,
+        borderRadius: 18,
+        borderWidth: 1,
+        borderColor: theme.colors.hairline,
+        opacity: pressed ? 0.88 : 1,
+      })}>
+      {item.photo ? (
+        <Image
+          source={{ uri: item.photo }}
+          style={{ width: 52, height: 52, borderRadius: 14 }}
+          resizeMode="cover"
+        />
+      ) : (
+        <View style={{
+          width: 52, height: 52, borderRadius: 14,
+          backgroundColor: getCategoryColor(item.category),
+          alignItems: 'center', justifyContent: 'center',
+        }}>
+          <Text style={{ fontSize: 24 }}>{item.emoji}</Text>
+        </View>
+      )}
+      <View style={{ flex: 1, minWidth: 0, gap: 4 }}>
+        <Text style={{
+          fontFamily: theme.fontFamily.sans.medium,
+          fontSize: 15,
+          color: theme.colors.ink,
+        }} numberOfLines={1}>{item.name}</Text>
+        <Text style={{
+          fontFamily: theme.fontFamily.sans.regular,
+          fontSize: 12,
+          color: theme.colors.muted,
+        }}>
+          {item.quantity} {item.unit} · {getLocationName(item.locationId)}
+        </Text>
+      </View>
+      <Tag label={formatExpiryLabel(days)} tone={status} size="sm" />
+    </Pressable>
+  );
+}
 
 export function Alerts() {
   const { top } = useSafeAreaInsets();
   const { pantryItems } = useAppData();
-  const [activeFilter, setActiveFilter] = useState<FilterKey>('all');
+  const navigation = useNavigation<any>();
+  const [filter, setFilter] = useState<FilterKey>('all');
+  const [selectedItem, setSelectedItem] = useState<PantryItem | null>(null);
   const { deletePantryItem } = useDeletePantryItem();
+  const { updatePantryItem } = useUpdatePantryItem();
 
-  const urgentCount = pantryItems.filter((i) => getDaysUntilExpiry(i.expiresAt) <= 3).length;
+  const sorted = useMemo(
+    () => [...pantryItems].sort((a, b) => getDaysUntilExpiry(a.expiresAt) - getDaysUntilExpiry(b.expiresAt)),
+    [pantryItems],
+  );
 
-  const filteredItems = useMemo(() => {
-    const sorted = [...pantryItems].sort(
-      (a, b) => a.expiresAt.getTime() - b.expiresAt.getTime(),
-    );
-    if (activeFilter === 'all') { return sorted; }
-    return sorted.filter((item) => getExpiryStatus(item.expiresAt) === activeFilter);
-  }, [pantryItems, activeFilter]);
+  const groups = useMemo(() => {
+    const g: Record<ExpiryStatus, PantryItem[]> = { expired: [], urgent: [], soon: [], planned: [], safe: [] };
+    sorted.forEach((i) => { g[getExpiryStatus(i.expiresAt)].push(i); });
+    return g;
+  }, [sorted]);
+
+  const filterCounts = useMemo(() => ({
+    all:     sorted.length,
+    expired: groups.expired.length,
+    urgent:  groups.urgent.length,
+    soon:    groups.soon.length,
+    safe:    groups.planned.length + groups.safe.length,
+  }), [groups, sorted]);
+
+  const filtered = useMemo(() => {
+    if (filter === 'all') return groups;
+    const empty: Record<ExpiryStatus, PantryItem[]> = { expired: [], urgent: [], soon: [], planned: [], safe: [] };
+    if (filter === 'safe') {
+      empty.planned = groups.planned;
+      empty.safe = groups.safe;
+      return empty;
+    }
+    empty[filter] = groups[filter];
+    return empty;
+  }, [filter, groups]);
+
+  const STATUS_ORDER: ExpiryStatus[] = ['expired', 'urgent', 'soon', 'planned', 'safe'];
 
   return (
-    <View style={{ flex: 1, backgroundColor: theme.colors.background }}>
-      <StatusBar barStyle="dark-content" backgroundColor={theme.colors.background} />
+    <View style={{ flex: 1, backgroundColor: theme.colors.canvas }}>
+      <StatusBar barStyle="dark-content" backgroundColor={theme.colors.canvas} />
 
-      {/* Header */}
-      <View style={{ paddingTop: top + 20, paddingHorizontal: 20, paddingBottom: 16 }}>
-        <AppText size="xs" family="medium" color={theme.colors.textMuted}
-          style={{ letterSpacing: 1.5, textTransform: 'uppercase', marginBottom: 4 }}>
-          Minha despensa
-        </AppText>
-        <AppText family="displayItalic"
-          style={{ fontSize: 32, lineHeight: 38, color: theme.colors.text }}>
-          Alertas
-        </AppText>
-        {urgentCount > 0 && (
-          <AppText size="sm" color={theme.colors.danger.DEFAULT} style={{ marginTop: 4 }}>
-            {urgentCount} {urgentCount === 1 ? 'item precisa' : 'itens precisam'} de atenção
-          </AppText>
-        )}
-      </View>
-
-      {/* Filter chips */}
-      <ScrollView
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        contentContainerStyle={{ paddingHorizontal: 20, gap: 8, paddingBottom: 16 }}
-      >
-        {FILTERS.map(({ key, label }) => (
+      <ScrollView showsVerticalScrollIndicator={false}>
+        {/* Header */}
+        <View style={{
+          paddingTop: top + 14,
+          paddingHorizontal: 18,
+          paddingBottom: 4,
+          flexDirection: 'row',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+        }}>
           <Pressable
-            key={key}
-            onPress={() => setActiveFilter(key)}
+            onPress={() => navigation.navigate('Home')}
             style={{
-              paddingHorizontal: 16,
-              paddingVertical: 8,
-              borderRadius: theme.radii.pill,
-              backgroundColor: activeFilter === key ? theme.colors.text : theme.colors.surface,
-              borderWidth: 1,
-              borderColor: activeFilter === key ? theme.colors.text : theme.colors.border,
+              width: 40, height: 40, borderRadius: 999,
+              borderWidth: 1, borderColor: theme.colors.hairline,
+              backgroundColor: theme.colors.surface,
+              alignItems: 'center', justifyContent: 'center',
             }}
           >
-            <AppText
-              size="sm"
-              family="medium"
-              color={activeFilter === key ? '#fff' : theme.colors.text}
-            >
-              {label}
-            </AppText>
+            <ArrowLeft size={18} color={theme.colors.ink} strokeWidth={1.6} />
           </Pressable>
-        ))}
-      </ScrollView>
-
-      {filteredItems.length === 0 ? (
-        <View style={{ alignItems: 'center', justifyContent: 'center', paddingVertical: 60, gap: 12 }}>
-          <AppText style={{ fontSize: 48 }}>✓</AppText>
-          <AppText family="display" style={{ fontSize: 22, color: theme.colors.text }}>
-            Tudo em ordem!
-          </AppText>
-          <AppText size="sm" color={theme.colors.textMuted} align="center">
-            Todos os itens estão dentro do prazo.
-          </AppText>
+          <Text style={{
+            fontFamily: theme.fontFamily.mono.regular,
+            fontSize: 9.5,
+            letterSpacing: 0.12 * 9.5,
+            textTransform: 'uppercase',
+            color: theme.colors.muted,
+          }}>Fila de validade</Text>
+          <Pressable style={{
+            width: 40, height: 40, borderRadius: 999,
+            borderWidth: 1, borderColor: theme.colors.hairline,
+            backgroundColor: theme.colors.surface,
+            alignItems: 'center', justifyContent: 'center',
+          }}>
+            <Filter size={18} color={theme.colors.ink} strokeWidth={1.6} />
+          </Pressable>
         </View>
-      ) : (
-        <FlatList
-          data={filteredItems}
-          keyExtractor={(item) => item.id}
-          contentContainerStyle={{ paddingHorizontal: 20, gap: 2, paddingBottom: 24 }}
-          showsVerticalScrollIndicator={false}
-          renderItem={({ item, index }) => {
-            const days = getDaysUntilExpiry(item.expiresAt);
-            const status = getExpiryStatus(item.expiresAt);
-            const isFirst = index === 0;
-            const isLast = index === filteredItems.length - 1;
 
+        {/* Hero */}
+        <View style={{ paddingHorizontal: 18, paddingTop: 10 }}>
+          <Text style={{
+            fontFamily: theme.fontFamily.mono.regular,
+            fontSize: 9.5,
+            letterSpacing: 0.12 * 9.5,
+            textTransform: 'uppercase',
+            color: theme.colors.muted,
+          }}>Alertas</Text>
+          <Text style={{
+            fontFamily: theme.fontFamily.display.regular,
+            fontSize: 38,
+            color: theme.colors.ink,
+            marginTop: 6,
+            marginBottom: 12,
+            lineHeight: 42,
+          }}>
+            O que decidir <Text style={{ fontStyle: 'italic' }}>hoje.</Text>
+          </Text>
+          <Text style={{
+            fontFamily: theme.fontFamily.sans.regular,
+            fontSize: 14,
+            color: theme.colors.muted,
+            marginBottom: 14,
+            lineHeight: 20,
+          }}>
+            Itens ordenados do mais urgente ao seguro. Toque para ver as ações.
+          </Text>
+        </View>
+
+        {/* Filter chips */}
+        <ScrollView
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          contentContainerStyle={{ paddingHorizontal: 18, gap: 8, paddingBottom: 14 }}
+        >
+          {FILTERS.map((f) => {
+            const active = filter === f.id;
+            const count = filterCounts[f.id as keyof typeof filterCounts] ?? 0;
             return (
-              <View style={{
-                backgroundColor: theme.colors.surface,
-                borderTopLeftRadius: isFirst ? theme.radii.md : 4,
-                borderTopRightRadius: isFirst ? theme.radii.md : 4,
-                borderBottomLeftRadius: isLast ? theme.radii.md : 4,
-                borderBottomRightRadius: isLast ? theme.radii.md : 4,
-                paddingHorizontal: 14,
-                paddingVertical: 14,
-                flexDirection: 'row',
-                alignItems: 'center',
-                gap: 12,
-                borderWidth: 1,
-                borderColor: theme.colors.border,
-                marginBottom: isLast ? 0 : -1,
-              }}>
-                {/* Expiry color bar */}
+              <Pressable
+                key={f.id}
+                onPress={() => setFilter(f.id)}
+                style={{
+                  height: 38,
+                  paddingHorizontal: 14,
+                  borderRadius: 999,
+                  backgroundColor: active ? theme.colors.ink : theme.colors.surface,
+                  borderWidth: active ? 0 : 1,
+                  borderColor: theme.colors.hairline,
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  gap: 8,
+                  flexShrink: 0,
+                }}
+              >
+                <Text style={{
+                  fontFamily: theme.fontFamily.sans.medium,
+                  fontSize: 13,
+                  color: active ? theme.colors.canvas : theme.colors.ink,
+                }}>{f.label}</Text>
                 <View style={{
-                  width: 4,
-                  height: 36,
-                  borderRadius: 2,
-                  backgroundColor: days <= 0
-                    ? theme.colors.danger.DEFAULT
-                    : days <= 3
-                      ? theme.colors.info.DEFAULT
-                      : theme.colors.warning.DEFAULT,
-                }} />
-
-                <View style={{
-                  width: 40, height: 40, borderRadius: theme.radii.sm,
-                  backgroundColor: theme.colors.surface2,
-                  alignItems: 'center', justifyContent: 'center',
+                  paddingHorizontal: 7, paddingVertical: 2,
+                  borderRadius: 999,
+                  backgroundColor: active ? 'rgba(250,245,235,0.2)' : theme.colors.canvas,
                 }}>
-                  <AppText style={{ fontSize: 22 }}>{getCategoryIcon(item.category)}</AppText>
+                  <Text style={{
+                    fontFamily: theme.fontFamily.mono.regular,
+                    fontSize: 11,
+                    color: active ? theme.colors.canvas : theme.colors.muted,
+                  }}>{count}</Text>
                 </View>
+              </Pressable>
+            );
+          })}
+        </ScrollView>
 
-                <View style={{ flex: 1, gap: 2 }}>
-                  <AppText size="base" family="medium" numberOfLines={1}>{item.name}</AppText>
-                  <AppText size="xs" color={theme.colors.textMuted}>
-                    {item.quantity} {item.unit} · {item.category}
-                  </AppText>
+        {/* Groups */}
+        <View style={{ paddingHorizontal: 18, gap: 18 }}>
+          {STATUS_ORDER.map((key) => {
+            const g = filtered[key];
+            if (!g || g.length === 0) return null;
+            const meta = GROUP_META[key];
+            return (
+              <View key={key} style={{ gap: 10 }}>
+                <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-end', paddingTop: 6 }}>
+                  <View style={{ gap: 2 }}>
+                    <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}>
+                      <View style={{ width: 8, height: 8, borderRadius: 4, backgroundColor: meta.accent }} />
+                      <Text style={{
+                        fontFamily: theme.fontFamily.sans.medium,
+                        fontSize: 14,
+                        color: theme.colors.ink,
+                      }}>{meta.title}</Text>
+                    </View>
+                    <Text style={{
+                      fontFamily: theme.fontFamily.sans.regular,
+                      fontSize: 12,
+                      color: theme.colors.muted,
+                    }}>{meta.caption}</Text>
+                  </View>
+                  <Text style={{
+                    fontFamily: theme.fontFamily.display.italic,
+                    fontSize: 30,
+                    color: theme.colors.ink,
+                  }}>{g.length}</Text>
                 </View>
-
-                <Tag label={formatExpiryLabel(days)} tone={status} size="sm" />
-
-                <Pressable
-                  onPress={() => deletePantryItem(item.id)}
-                  hitSlop={8}
-                  style={{ padding: 4 }}
-                >
-                  <Trash2 size={15} color={theme.colors.textMuted} strokeWidth={1.8} />
-                </Pressable>
+                <View style={{ gap: 8 }}>
+                  {g.map((item) => (
+                    <FoodRow
+                      key={item.id}
+                      item={item}
+                      onPress={() => setSelectedItem(item)}
+                    />
+                  ))}
+                </View>
               </View>
             );
-          }}
-        />
-      )}
+          })}
+          <View style={{ height: 8 }} />
+        </View>
+      </ScrollView>
+
+      <ActionSheet
+        item={selectedItem}
+        onClose={() => setSelectedItem(null)}
+        onConsume={(item, qty) => {
+          if (qty >= item.quantity) deletePantryItem(item.id);
+          else updatePantryItem({ id: item.id, updates: { quantity: item.quantity - qty } });
+        }}
+        onDiscard={(item) => deletePantryItem(item.id)}
+        onViewRecipes={() => navigation.navigate('Recipes')}
+        onAddReplenishment={(item) => navigation.navigate('Replenishment', { itemId: item.id })}
+      />
     </View>
   );
 }

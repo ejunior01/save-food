@@ -1,207 +1,337 @@
-import React, { useState } from 'react';
-import { ImageBackground, Pressable, ScrollView, StatusBar, StyleSheet, View } from 'react-native';
-import { LinearGradient } from 'expo-linear-gradient';
+import React from 'react';
+import {
+  Image,
+  Pressable,
+  ScrollView,
+  StatusBar,
+  Text,
+  View,
+} from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { ChevronLeft, Check, Clock, Users } from 'lucide-react-native';
+import { ArrowLeft, Bookmark, Flame, MoreHorizontal, Plus } from 'lucide-react-native';
 
-import { AppText } from '@ui/components/AppText';
-import { ProductImage } from '@ui/components/ProductImage';
-import { Button } from '@ui/components/Button';
+import { Tag } from '@ui/components/Tag';
 import { theme } from '@ui/styles/theme';
 import { useAppData } from '@app/context/AppDataContext';
 import { AppStackScreenProps } from '@app/navigation/types';
 
 type Props = AppStackScreenProps<'RecipeDetail'>;
 
-export function RecipeDetail({ route, navigation }: Props) {
-  const { top, bottom } = useSafeAreaInsets();
-  const { recipes } = useAppData();
-  const recipe = recipes.find((r) => r.id === route.params.recipeId);
-  const [checkedIngredients, setCheckedIngredients] = useState<Set<number>>(new Set());
+function Eyebrow({ children, dark = false }: { children: string; dark?: boolean }) {
+  return (
+    <Text style={{
+      fontFamily: theme.fontFamily.mono.regular,
+      fontSize: 9.5,
+      letterSpacing: 0.12 * 9.5,
+      textTransform: 'uppercase',
+      color: dark ? 'rgba(250,245,235,0.7)' : theme.colors.muted,
+    }}>{children}</Text>
+  );
+}
 
-  if (!recipe) {
+function MiniStat({ icon, value, label }: { icon: React.ReactNode; value: string | number; label: string }) {
+  return (
+    <View style={{ flex: 1, alignItems: 'center', gap: 4 }}>
+      <View style={{ flexDirection: 'row', alignItems: 'center', gap: 6 }}>
+        {icon}
+        <Text style={{
+          fontFamily: theme.fontFamily.display.italic,
+          fontSize: 22,
+          color: theme.colors.ink,
+        }}>{value}</Text>
+      </View>
+      <Text style={{
+        fontFamily: theme.fontFamily.mono.regular,
+        fontSize: 9.5,
+        letterSpacing: 0.12 * 9.5,
+        textTransform: 'uppercase',
+        color: theme.colors.muted,
+      }}>{label}</Text>
+    </View>
+  );
+}
+
+export function RecipeDetail({ route, navigation }: Props) {
+  const { bottom } = useSafeAreaInsets();
+  const { recipes } = useAppData();
+  const r = recipes.find((x) => x.id === route.params.recipeId) ?? recipes[0];
+
+  if (!r) {
     return (
-      <View style={{ flex: 1, backgroundColor: theme.colors.background, alignItems: 'center', justifyContent: 'center' }}>
-        <AppText>Receita não encontrada</AppText>
+      <View style={{ flex: 1, backgroundColor: theme.colors.canvas, alignItems: 'center', justifyContent: 'center' }}>
+        <Text style={{ fontFamily: theme.fontFamily.sans.regular, color: theme.colors.muted }}>Receita não encontrada</Text>
       </View>
     );
   }
 
-  function toggleIngredient(index: number) {
-    setCheckedIngredients((prev) => {
-      const next = new Set(prev);
-      if (next.has(index)) { next.delete(index); } else { next.add(index); }
-      return next;
-    });
-  }
+  const missing = r.missing ?? [];
 
   return (
-    <View style={{ flex: 1, backgroundColor: theme.colors.background }}>
-      <StatusBar barStyle="light-content" backgroundColor={theme.colors.text} />
+    <View style={{ flex: 1, backgroundColor: theme.colors.canvas }}>
+      <StatusBar barStyle="light-content" backgroundColor="transparent" translucent />
 
-      {/* Hero */}
-      <ImageBackground
-        source={recipe.imageUrl ? { uri: recipe.imageUrl } : undefined}
-        style={{ height: 280, backgroundColor: theme.colors.text, alignItems: 'center', justifyContent: 'center' }}
-      >
-        {recipe.imageUrl ? (
-          <LinearGradient
-            colors={['rgba(0,0,0,0.3)', 'transparent']}
-            style={StyleSheet.absoluteFill}
-          />
-        ) : (
-          <ProductImage emoji={recipe.emoji} size={110} />
-        )}
-        <Pressable
-          style={{
-            position: 'absolute',
-            top: top + 8, left: 16,
-            width: 40, height: 40, borderRadius: 20,
-            backgroundColor: 'rgba(255,255,255,0.18)',
-            alignItems: 'center', justifyContent: 'center',
-          }}
-          onPress={() => navigation.goBack()}
-        >
-          <ChevronLeft size={22} color="#fff" strokeWidth={2} />
-        </Pressable>
-      </ImageBackground>
-
-      {/* Content card */}
-      <ScrollView
-        style={{
-          flex: 1,
-          backgroundColor: theme.colors.surface,
-          borderTopLeftRadius: theme.radii.xl,
-          borderTopRightRadius: theme.radii.xl,
-          marginTop: -24,
-        }}
-        showsVerticalScrollIndicator={false}
-        contentContainerStyle={{ padding: 24, paddingBottom: 120 }}
-      >
-        <AppText size="xs" family="medium" color={theme.colors.primary}
-          style={{ letterSpacing: 0.8, textTransform: 'uppercase', marginBottom: 6 }}>
-          {recipe.category}
-        </AppText>
-        <AppText family="displayItalic" style={{ fontSize: 28, lineHeight: 34, color: theme.colors.text }}>
-          {recipe.title}
-        </AppText>
-
-        <View style={{ flexDirection: 'row', gap: 20, marginTop: 14 }}>
-          <View style={{ flexDirection: 'row', alignItems: 'center', gap: 6 }}>
-            <Clock size={14} color={theme.colors.textMuted} strokeWidth={1.8} />
-            <AppText size="sm" color={theme.colors.textMuted}>{recipe.duration} min</AppText>
+      <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: 120 }}>
+        {/* Hero photo */}
+        <View style={{ position: 'relative' }}>
+          {r.photo ? (
+            <Image
+              source={{ uri: r.photo }}
+              style={{ width: '100%', height: 320 }}
+              resizeMode="cover"
+            />
+          ) : (
+            <View style={{ width: '100%', height: 320, backgroundColor: theme.colors.block.sage, alignItems: 'center', justifyContent: 'center' }}>
+              <Text style={{ fontSize: 80 }}>{r.emoji}</Text>
+            </View>
+          )}
+          {/* Dark overlay gradient */}
+          <View style={{
+            position: 'absolute', top: 0, left: 0, right: 0, bottom: 0,
+            backgroundColor: 'rgba(0,0,0,0.22)',
+          }} />
+          {/* Nav */}
+          <View style={{ position: 'absolute', top: 52, left: 14, right: 14, flexDirection: 'row', justifyContent: 'space-between' }}>
+            <Pressable
+              onPress={() => navigation.goBack()}
+              style={{
+                width: 40, height: 40, borderRadius: 999,
+                backgroundColor: 'rgba(0,0,0,0.35)',
+                alignItems: 'center', justifyContent: 'center',
+              }}
+            >
+              <ArrowLeft size={18} color="#fff" strokeWidth={1.6} />
+            </Pressable>
+            <View style={{ flexDirection: 'row', gap: 8 }}>
+              <Pressable style={{
+                width: 40, height: 40, borderRadius: 999,
+                backgroundColor: 'rgba(0,0,0,0.35)',
+                alignItems: 'center', justifyContent: 'center',
+              }}>
+                <Bookmark size={18} color="#fff" strokeWidth={1.6} />
+              </Pressable>
+              <Pressable style={{
+                width: 40, height: 40, borderRadius: 999,
+                backgroundColor: 'rgba(0,0,0,0.35)',
+                alignItems: 'center', justifyContent: 'center',
+              }}>
+                <MoreHorizontal size={18} color="#fff" strokeWidth={1.6} />
+              </Pressable>
+            </View>
           </View>
-          <View style={{ flexDirection: 'row', alignItems: 'center', gap: 6 }}>
-            <Users size={14} color={theme.colors.textMuted} strokeWidth={1.8} />
-            <AppText size="sm" color={theme.colors.textMuted}>{recipe.servings} porções</AppText>
+          {/* Title overlay */}
+          <View style={{ position: 'absolute', bottom: 18, left: 18, right: 18 }}>
+            <View style={{
+              height: 28, paddingHorizontal: 10, borderRadius: 999,
+              backgroundColor: theme.colors.block.peach,
+              flexDirection: 'row', alignItems: 'center', gap: 5,
+              alignSelf: 'flex-start',
+              marginBottom: 14,
+            }}>
+              <Text style={{ fontSize: 12 }}>🔥</Text>
+              <Text style={{
+                fontFamily: theme.fontFamily.mono.regular,
+                fontSize: 9.5,
+                letterSpacing: 0.12 * 9.5,
+                textTransform: 'uppercase',
+                color: theme.colors.ink,
+              }}>Use primeiro</Text>
+            </View>
+            <Eyebrow dark>{`Almoço · ${r.servings} porções`}</Eyebrow>
+            <Text style={{
+              fontFamily: theme.fontFamily.display.regular,
+              fontSize: 42,
+              color: theme.colors.canvas,
+              marginTop: 8,
+              lineHeight: 46,
+            }}>{r.title}</Text>
           </View>
         </View>
 
-        {/* Pistachio match block */}
-        <View style={{
-          marginTop: 20,
-          backgroundColor: theme.colors.block.pistachio,
-          borderRadius: theme.radii.md,
-          padding: 16,
-          flexDirection: 'row',
-          alignItems: 'center',
-          gap: 14,
-        }}>
+        {/* Match block */}
+        <View style={{ paddingHorizontal: 18, paddingTop: 14 }}>
           <View style={{
-            width: 40, height: 40, borderRadius: theme.radii.sm,
-            backgroundColor: 'rgba(26,43,31,0.12)',
-            alignItems: 'center', justifyContent: 'center',
+            backgroundColor: theme.colors.block.pistachio,
+            borderRadius: 18,
+            padding: 16,
           }}>
-            <AppText style={{ fontSize: 22 }}>🥦</AppText>
+            <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+              <View style={{ gap: 4, flex: 1 }}>
+                <Eyebrow>Por que sugerimos</Eyebrow>
+                <Text style={{
+                  fontFamily: theme.fontFamily.sans.medium,
+                  fontSize: 14,
+                  color: theme.colors.ink,
+                }}>{r.reason}</Text>
+              </View>
+              <Text style={{
+                fontFamily: theme.fontFamily.display.italic,
+                fontSize: 36,
+                color: theme.colors.ink,
+                lineHeight: 40,
+              }}>
+                {r.have}
+                <Text style={{ fontFamily: theme.fontFamily.sans.regular, fontSize: 16, color: theme.colors.muted }}>
+                  /{r.total}
+                </Text>
+              </Text>
+            </View>
           </View>
-          <View style={{ flex: 1 }}>
-            <AppText family="display" style={{ fontSize: 17, color: theme.colors.text }}>
-              {recipe.ingredients.length} ingredientes
-            </AppText>
-            <AppText size="xs" color={theme.colors.textMuted} style={{ marginTop: 2 }}>
-              Toque para marcar os que você tem
-            </AppText>
-          </View>
+        </View>
+
+        {/* Stats row */}
+        <View style={{
+          flexDirection: 'row',
+          paddingHorizontal: 22,
+          paddingVertical: 18,
+          alignItems: 'center',
+        }}>
+          <MiniStat icon={<Text style={{ fontSize: 16 }}>⏱</Text>} value={r.duration} label="minutos" />
+          <View style={{ width: 1, height: 36, backgroundColor: theme.colors.hairline }} />
+          <MiniStat icon={<Text style={{ fontSize: 16 }}>👥</Text>} value={r.servings} label="porções" />
+          <View style={{ width: 1, height: 36, backgroundColor: theme.colors.hairline }} />
+          <MiniStat icon={<Flame size={16} color={theme.colors.ink} strokeWidth={1.6} />} value={r.level ?? 'Fácil'} label="dificuldade" />
         </View>
 
         {/* Ingredients */}
-        <AppText size="xs" family="medium" color={theme.colors.textMuted}
-          style={{ letterSpacing: 1.2, textTransform: 'uppercase', marginTop: 24, marginBottom: 10 }}>
-          Ingredientes
-        </AppText>
+        <View style={{ paddingHorizontal: 18, paddingTop: 4 }}>
+          <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: 10 }}>
+            <View style={{ gap: 4 }}>
+              <Eyebrow>Ingredientes</Eyebrow>
+              <Text style={{
+                fontFamily: theme.fontFamily.display.regular,
+                fontSize: 22,
+                color: theme.colors.ink,
+              }}>O que você precisa</Text>
+            </View>
+            {missing.length > 0 && (
+              <Pressable style={{
+                height: 34, paddingHorizontal: 12, borderRadius: 999,
+                backgroundColor: theme.colors.surface,
+                borderWidth: 1, borderColor: theme.colors.hairline,
+                flexDirection: 'row', alignItems: 'center', gap: 6,
+              }}>
+                <Plus size={14} color={theme.colors.ink} strokeWidth={1.6} />
+                <Text style={{ fontFamily: theme.fontFamily.sans.medium, fontSize: 13, color: theme.colors.ink }}>
+                  Adicionar à lista
+                </Text>
+              </Pressable>
+            )}
+          </View>
 
-        {recipe.ingredients.map((ing, index) => {
-          const isChecked = checkedIngredients.has(index);
-          return (
-            <Pressable
-              key={index}
-              style={{
+          <View style={{ gap: 8 }}>
+            {r.ingredients.map((ing, i) => (
+              <View key={i} style={{
                 flexDirection: 'row',
                 alignItems: 'center',
-                paddingVertical: 12,
-                borderBottomWidth: 1,
-                borderBottomColor: theme.colors.border,
                 gap: 12,
-              }}
-              onPress={() => toggleIngredient(index)}
-            >
-              <View style={{
-                width: 22, height: 22, borderRadius: 11,
-                borderWidth: 1.5,
-                borderColor: isChecked ? theme.colors.primary : theme.colors.border,
-                backgroundColor: isChecked ? theme.colors.primary : 'transparent',
-                alignItems: 'center', justifyContent: 'center',
+                backgroundColor: theme.colors.surface,
+                padding: 10,
+                borderRadius: 14,
+                borderWidth: 1,
+                borderColor: theme.colors.hairline,
               }}>
-                {isChecked && <Check size={12} color="#fff" strokeWidth={2.5} />}
+                <View style={{
+                  width: 24, height: 24, borderRadius: 999,
+                  backgroundColor: ing.have ? theme.colors.safeSoft : theme.colors.dangerSoft,
+                  alignItems: 'center', justifyContent: 'center',
+                }}>
+                  <Text style={{
+                    color: ing.have ? theme.colors.safe : theme.colors.danger,
+                    fontSize: 14,
+                    fontWeight: '600',
+                  }}>{ing.have ? '✓' : '+'}</Text>
+                </View>
+                <View style={{ flex: 1, gap: 2 }}>
+                  <Text style={{
+                    fontFamily: theme.fontFamily.sans.medium,
+                    fontSize: 14,
+                    color: theme.colors.ink,
+                  }}>{ing.name}</Text>
+                  <Text style={{
+                    fontFamily: theme.fontFamily.sans.regular,
+                    fontSize: 12,
+                    color: theme.colors.muted,
+                  }}>
+                    {ing.amount} · {ing.have
+                      ? (ing.urgent ? 'você tem — usa antes de vencer' : 'você tem em casa')
+                      : 'precisa comprar'}
+                  </Text>
+                </View>
+                {ing.urgent && (
+                  <Tag label="urgente" tone="urgent" size="sm" />
+                )}
               </View>
-              <AppText
-                size="base"
-                style={{ flex: 1 }}
-                color={isChecked ? theme.colors.textMuted : theme.colors.text}
-              >
-                {ing.name}
-              </AppText>
-              <AppText size="sm" color={theme.colors.textMuted}>{ing.amount}</AppText>
-            </Pressable>
-          );
-        })}
+            ))}
+          </View>
+        </View>
 
         {/* Steps */}
-        <AppText size="xs" family="medium" color={theme.colors.textMuted}
-          style={{ letterSpacing: 1.2, textTransform: 'uppercase', marginTop: 28, marginBottom: 14 }}>
-          Modo de preparo
-        </AppText>
-
-        {recipe.steps.map((step, index) => (
-          <View key={index} style={{ flexDirection: 'row', gap: 14, marginBottom: 18 }}>
-            <View style={{
-              width: 28, height: 28, borderRadius: 14,
-              backgroundColor: theme.colors.block.pistachio,
-              alignItems: 'center', justifyContent: 'center', flexShrink: 0, marginTop: 1,
-            }}>
-              <AppText size="xs" family="semiBold" color={theme.colors.primary}>
-                {index + 1}
-              </AppText>
-            </View>
-            <AppText size="base" style={{ flex: 1, lineHeight: 24 }}>{step}</AppText>
+        <View style={{ paddingHorizontal: 18, paddingTop: 24 }}>
+          <Eyebrow>Modo de preparo</Eyebrow>
+          <Text style={{
+            fontFamily: theme.fontFamily.display.regular,
+            fontSize: 22,
+            color: theme.colors.ink,
+            marginTop: 4,
+            marginBottom: 14,
+          }}>Passo a passo</Text>
+          <View style={{ gap: 12 }}>
+            {r.steps.map((step, i) => (
+              <View key={i} style={{ flexDirection: 'row', alignItems: 'flex-start', gap: 14 }}>
+                <Text style={{
+                  fontFamily: theme.fontFamily.display.italic,
+                  fontSize: 32,
+                  color: theme.colors.primary,
+                  lineHeight: 36,
+                  width: 36,
+                  flexShrink: 0,
+                }}>{String(i + 1).padStart(2, '0')}</Text>
+                <Text style={{
+                  fontFamily: theme.fontFamily.sans.regular,
+                  fontSize: 14,
+                  color: theme.colors.ink,
+                  lineHeight: 20,
+                  paddingTop: 4,
+                  flex: 1,
+                }}>{step}</Text>
+              </View>
+            ))}
           </View>
-        ))}
+        </View>
       </ScrollView>
 
-      {/* Floating CTA */}
+      {/* Fixed CTA */}
       <View style={{
-        position: 'absolute', bottom: 0, left: 0, right: 0,
-        padding: 20, paddingBottom: Math.max(bottom, 20),
-        backgroundColor: theme.colors.surface,
-        borderTopWidth: 1, borderTopColor: theme.colors.border,
+        position: 'absolute', left: 0, right: 0, bottom: 0,
+        paddingHorizontal: 18,
+        paddingTop: 16,
+        paddingBottom: Math.max(bottom, 18),
+        backgroundColor: 'transparent',
       }}>
-        <Button
-          variant="primary"
-          size="lg"
-          label="Começar a cozinhar"
-          onPress={() => {}}
-          style={{ width: '100%' }}
-        />
+        <View style={{
+          position: 'absolute', top: 0, left: 0, right: 0, bottom: 0,
+          backgroundColor: theme.colors.canvas,
+          opacity: 0.95,
+        }} />
+        <Pressable
+          style={({ pressed }) => ({
+            height: 54,
+            borderRadius: 999,
+            backgroundColor: theme.colors.ink,
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'center',
+            gap: 10,
+            opacity: pressed ? 0.88 : 1,
+          })}
+        >
+          <Text style={{
+            fontFamily: theme.fontFamily.sans.semiBold,
+            fontSize: 16,
+            color: theme.colors.canvas,
+          }}>Cozinhar agora</Text>
+          <Flame size={18} color={theme.colors.canvas} strokeWidth={1.6} />
+        </Pressable>
       </View>
     </View>
   );

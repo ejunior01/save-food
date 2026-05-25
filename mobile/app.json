@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "save-food",
-    "slug": "save-food",
+    "name": "DespensaCerta",
+    "slug": "despensa-certa",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -13,18 +13,51 @@
       "backgroundColor": "#ffffff"
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "infoPlist": {
+        "NSUserNotificationUsageDescription": "Avise-me antes que meus alimentos vençam"
+      }
     },
     "android": {
+      "package": "br.com.despensacerta",
+      "versionCode": 1,
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
+        "backgroundColor": "#FAF5EB"
       },
       "edgeToEdgeEnabled": true,
-      "predictiveBackGestureEnabled": false
+      "predictiveBackGestureEnabled": false,
+      "permissions": [
+        "android.permission.RECEIVE_BOOT_COMPLETED",
+        "android.permission.VIBRATE",
+        "android.permission.POST_NOTIFICATIONS"
+      ]
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "plugins": [
+      [
+        "expo-notifications",
+        {
+          "icon": "./assets/icon.png",
+          "color": "#1A2B1F",
+          "sounds": []
+        }
+      ],
+      [
+        "expo-camera",
+        {
+          "cameraPermission": "Necessário para escanear códigos de barras e tirar fotos dos alimentos."
+        }
+      ],
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "Necessário para adicionar fotos dos seus alimentos.",
+          "cameraPermission": "Necessário para tirar fotos dos alimentos."
+        }
+      ]
+    ]
   }
 }

@@ -1,15 +1,18 @@
 import 'react-native-reanimated';
 
 import {
-  HostGrotesk_400Regular,
-  HostGrotesk_500Medium,
-  HostGrotesk_600SemiBold,
-  useFonts,
-} from '@expo-google-fonts/host-grotesk';
-import {
   InstrumentSerif_400Regular,
   InstrumentSerif_400Regular_Italic,
 } from '@expo-google-fonts/instrument-serif';
+import {
+  DMSans_400Regular,
+  DMSans_500Medium,
+  DMSans_600SemiBold,
+} from '@expo-google-fonts/dm-sans';
+import {
+  JetBrainsMono_400Regular,
+} from '@expo-google-fonts/jetbrains-mono';
+import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
 import { useEffect } from 'react';
 
@@ -21,26 +24,27 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 SplashScreen.preventAutoHideAsync();
 
 export function App() {
-  const [isFontsLoaded] = useFonts({
-    HostGrotesk_400Regular,
-    HostGrotesk_500Medium,
-    HostGrotesk_600SemiBold,
+  const [isFontsLoaded, fontError] = useFonts({
     InstrumentSerif_400Regular,
     InstrumentSerif_400Regular_Italic,
+    DMSans_400Regular,
+    DMSans_500Medium,
+    DMSans_600SemiBold,
+    JetBrainsMono_400Regular,
   });
 
   useEffect(() => {
-    if (isFontsLoaded) {
+    if (isFontsLoaded || fontError) {
       SplashScreen.hideAsync();
     }
-  }, [isFontsLoaded]);
+  }, [isFontsLoaded, fontError]);
 
-  if (!isFontsLoaded) {
+  if (!isFontsLoaded && !fontError) {
     return null;
   }
 
   return (
-    <GestureHandlerRootView>
+    <GestureHandlerRootView style={{ flex: 1 }}>
       <SafeAreaProvider>
         <Navigation />
       </SafeAreaProvider>

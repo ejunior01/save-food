@@ -2,7 +2,7 @@ import React from 'react';
 import { Text, TextStyle, StyleProp } from 'react-native';
 import { theme } from '@ui/styles/theme';
 
-type FontFamily = keyof typeof theme.fontFamily.sans | 'display' | 'displayItalic';
+type FontFamily = 'regular' | 'medium' | 'semiBold' | 'display' | 'displayItalic' | 'mono';
 
 type AppTextProps = {
   size?: keyof typeof theme.fontSize;
@@ -12,12 +12,17 @@ type AppTextProps = {
   numberOfLines?: number;
   style?: StyleProp<TextStyle>;
   children?: React.ReactNode;
-}
+};
 
 function resolveFontFamily(family: FontFamily): string {
-  if (family === 'display') { return theme.fontFamily.display.regular; }
-  if (family === 'displayItalic') { return theme.fontFamily.display.italic; }
-  return theme.fontFamily.sans[family];
+  switch (family) {
+    case 'display': return theme.fontFamily.display.regular;
+    case 'displayItalic': return theme.fontFamily.display.italic;
+    case 'mono': return theme.fontFamily.mono.regular;
+    case 'medium': return theme.fontFamily.sans.medium;
+    case 'semiBold': return theme.fontFamily.sans.semiBold;
+    default: return theme.fontFamily.sans.regular;
+  }
 }
 
 export function AppText({
@@ -32,7 +37,7 @@ export function AppText({
   const textStyle: TextStyle = {
     fontFamily: resolveFontFamily(family),
     fontSize: theme.fontSize[size],
-    color: color ?? theme.colors.text,
+    color: color ?? theme.colors.ink,
     textAlign: align,
     includeFontPadding: false,
   };

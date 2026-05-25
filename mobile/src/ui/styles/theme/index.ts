@@ -1,74 +1,76 @@
 const colors = {
-  white: '#FFFFFF',
-  primary: '#1F4D2E',
-  background: '#FAF5EB',
+  // surfaces
+  canvas: '#FAF5EB',
+  canvas2: '#F4ECDB',
   surface: '#FFFFFF',
-  surface2: '#F6F0E2',
-  text: '#1A2B1F',
-  textMuted: 'rgba(26,43,31,0.52)',
-  border: 'rgba(26,43,31,0.1)',
+  surfaceSoft: '#F6F0E2',
+
+  // ink
+  ink: '#1A2B1F',
+  ink2: '#2C3E32',
+  muted: 'rgba(26,43,31,0.62)',
+  muted2: 'rgba(26,43,31,0.45)',
+  hairline: 'rgba(26,43,31,0.10)',
+  hairlineSoft: 'rgba(26,43,31,0.06)',
+
+  // brand
+  primary: '#1F4D2E',
+  primary2: '#143822',
+  onPrimary: '#FAF5EB',
+
+  // color blocks
   block: {
     pistachio: '#D5E2A8',
     cream: '#F0E6CF',
     peach: '#F2C57C',
     rose: '#EAB5A8',
     sage: '#C8D9B5',
-    charcoal: '#2D3B32',
+    clay: '#D9A57C',
+    charcoal: '#1A2B1F',
   },
-  success: {
-    DEFAULT: '#5C8D4A',
-    soft: '#E2EBD2',
-  },
-  warning: {
-    DEFAULT: '#B5901E',
-    soft: '#F3E9C3',
-  },
-  danger: {
-    DEFAULT: '#B33A3A',
-    soft: '#F3D6D2',
-  },
-  info: {
-    DEFAULT: '#C97A2D',
-    soft: '#F6E0C8',
-  },
-  gray: {
-    100: '#fafafa',
-    200: '#f4f4f5',
-    300: '#f3f4f6',
-    400: '#e4e4e7',
-    500: '#d9d9d9',
-    600: '#a1a1aa',
-    700: '#71717a',
-  },
-  black: {
-    600: '#1e293b',
-    700: '#18181b',
-    800: '#09090b',
-    900: '#000000',
-  },
+
+  // semantic / expiry
+  safe: '#5C8D4A',
+  safeSoft: '#E2EBD2',
+  soon: '#B5901E',
+  soonSoft: '#F3E9C3',
+  urgent: '#C97A2D',
+  urgentSoft: '#F6E0C8',
+  danger: '#B33A3A',
+  dangerSoft: '#F3D6D2',
+
+  // legacy aliases (keep for compat during migration)
+  white: '#FFFFFF',
+  background: '#FAF5EB',
+  text: '#1A2B1F',
+  textMuted: 'rgba(26,43,31,0.62)',
+  border: 'rgba(26,43,31,0.10)',
 } as const;
 
 const fontFamily = {
   sans: {
-    regular: 'HostGrotesk_400Regular',
-    medium: 'HostGrotesk_500Medium',
-    semiBold: 'HostGrotesk_600SemiBold',
+    regular: 'DMSans_400Regular',
+    medium: 'DMSans_500Medium',
+    semiBold: 'DMSans_600SemiBold',
   },
   display: {
     regular: 'InstrumentSerif_400Regular',
     italic: 'InstrumentSerif_400Regular_Italic',
   },
+  mono: {
+    regular: 'JetBrainsMono_400Regular',
+  },
 } as const;
 
 const fontSize = {
-  xs: 12,
-  sm: 14,
-  base: 16,
+  xs: 10.5,
+  sm: 13,
+  base: 15,
   lg: 20,
-  xl: 24,
-  '2xl': 28,
-  '3xl': 36,
-  '4xl': 44,
+  xl: 26,
+  '2xl': 32,
+  '3xl': 42,
+  '4xl': 56,
 } as const;
 
 const radii = {
@@ -80,9 +82,16 @@ const radii = {
   pill: 999,
 } as const;
 
+const shadows = {
+  sm: { shadowColor: '#1A2B1F', shadowOffset: { width: 0, height: 1 }, shadowOpacity: 0.06, shadowRadius: 0, elevation: 1 },
+  md: { shadowColor: '#1A2B1F', shadowOffset: { width: 0, height: 4 }, shadowOpacity: 0.07, shadowRadius: 14, elevation: 3 },
+  lg: { shadowColor: '#1A2B1F', shadowOffset: { width: 0, height: 14 }, shadowOpacity: 0.10, shadowRadius: 40, elevation: 8 },
+} as const;
+
 export const theme = {
   colors,
   fontFamily,
   fontSize,
   radii,
+  shadows,
 } as const;

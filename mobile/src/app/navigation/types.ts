@@ -12,6 +12,7 @@ export type RootStackParamList = {
 
 export type AuthStackParamList = {
   Onboarding: undefined;
+  Biometric: undefined;
   Login: undefined;
   SignUp: undefined;
 };
@@ -19,14 +20,18 @@ export type AuthStackParamList = {
 export type AppTabParamList = {
   Home: undefined;
   Alerts: undefined;
-  Scanner: undefined;
-  Recipes: undefined;
+  AddFood: undefined;
+  Inventory: undefined;
   ShoppingList: undefined;
 };
 
 export type AppStackParamList = {
   Tabs: undefined;
   RecipeDetail: { recipeId: string };
+  Recipes: undefined;
+  Insights: undefined;
+  Household: undefined;
+  Replenishment: { itemId?: string } | undefined;
 };
 
 export type RootStackNavigationProps = NativeStackNavigationProp<RootStackParamList>;

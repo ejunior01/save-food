@@ -1,37 +1,27 @@
 import React from 'react';
-import { View } from 'react-native';
-import { MotiView } from 'moti';
-
-import { AppText } from '@ui/components/AppText';
+import { StatusBar, Text, View } from 'react-native';
 import { theme } from '@ui/styles/theme';
 
 export function Splash() {
   return (
-    <View style={{
-      flex: 1,
-      backgroundColor: theme.colors.background,
-      alignItems: 'center',
-      justifyContent: 'center',
-      paddingHorizontal: 40,
-    }}>
-      <MotiView
-        from={{ opacity: 0, translateY: 20 }}
-        animate={{ opacity: 1, translateY: 0 }}
-        transition={{ type: 'timing', duration: 600 }}
-        style={{ alignItems: 'center', gap: 12 }}
-      >
-        <AppText size="xs" family="medium" color={theme.colors.textMuted}
-          style={{ letterSpacing: 2, textTransform: 'uppercase' }}>
-          DespensaCerta
-        </AppText>
-        <AppText
-          family="displayItalic"
-          align="center"
-          style={{ fontSize: 40, lineHeight: 48, color: theme.colors.text }}
-        >
-          Menos desperdício,{'\n'}mais economia.
-        </AppText>
-      </MotiView>
+    <View style={{ flex: 1, backgroundColor: theme.colors.canvas, alignItems: 'center', justifyContent: 'center' }}>
+      <StatusBar barStyle="dark-content" backgroundColor={theme.colors.canvas} />
+      <View style={{ alignItems: 'center', gap: 12 }}>
+        <Text style={{
+          fontFamily: theme.fontFamily.display.regular,
+          fontSize: 28,
+          color: theme.colors.ink,
+        }}>
+          Despensa<Text style={{ fontStyle: 'italic' }}>Certa</Text>
+        </Text>
+        <Text style={{
+          fontFamily: theme.fontFamily.mono.regular,
+          fontSize: 9.5,
+          letterSpacing: 0.12 * 9.5,
+          textTransform: 'uppercase',
+          color: theme.colors.muted,
+        }}>Carregando…</Text>
+      </View>
     </View>
   );
 }

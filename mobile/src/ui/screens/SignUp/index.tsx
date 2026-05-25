@@ -6,198 +6,243 @@ import {
   ScrollView,
   StatusBar,
   Text,
+  TextInput,
   View,
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { useForm, Controller } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { z } from 'zod';
-import { ChevronLeft, Check, Eye, EyeOff } from 'lucide-react-native';
+import { ArrowLeft, ArrowRight, Check } from 'lucide-react-native';
 
-import { AppText } from '@ui/components/AppText';
-import { Input } from '@ui/components/Input';
-import { Button } from '@ui/components/Button';
 import { theme } from '@ui/styles/theme';
 import { useAuth } from '@app/context/AuthContext';
 import { AuthStackScreenProps } from '@app/navigation/types';
-import { styles } from './styles';
-
-const schema = z
-  .object({
-    name: z.string().min(2, 'Mínimo 2 caracteres'),
-    email: z.string().email('E-mail inválido'),
-    password: z.string().min(6, 'Mínimo 6 caracteres'),
-    confirmPassword: z.string(),
-  })
-  .superRefine(({ password, confirmPassword }, ctx) => {
-    if (password !== confirmPassword) {
-      ctx.addIssue({
-        code: z.ZodIssueCode.custom,
-        message: 'As senhas não coincidem',
-        path: ['confirmPassword'],
-      });
-    }
-  });
-
-type FormData = z.infer<typeof schema>;
 
 type Props = AuthStackScreenProps<'SignUp'>;
+
+function FieldLabel({ children }: { children: string }) {
+  return (
+    <Text style={{
+      fontFamily: theme.fontFamily.mono.regular,
+      fontSize: 9.5,
+      letterSpacing: 0.12 * 9.5,
+      textTransform: 'uppercase',
+      color: theme.colors.muted,
+      marginBottom: 6,
+    }}>{children}</Text>
+  );
+}
+
+function InputField({
+  placeholder,
+  value,
+  onChangeText,
+  secureTextEntry,
+  keyboardType,
+  autoCapitalize,
+}: {
+  placeholder: string;
+  value: string;
+  onChangeText: (v: string) => void;
+  secureTextEntry?: boolean;
+  keyboardType?: 'email-address' | 'default';
+  autoCapitalize?: 'none' | 'words' | 'sentences';
+}) {
+  return (
+    <TextInput
+      style={{
+        height: 52,
+        backgroundColor: theme.colors.surface,
+        borderRadius: 14,
+        borderWidth: 1,
+        borderColor: theme.colors.hairline,
+        paddingHorizontal: 16,
+        fontFamily: theme.fontFamily.sans.regular,
+        fontSize: 15,
+        color: theme.colors.ink,
+      }}
+      placeholder={placeholder}
+      placeholderTextColor={theme.colors.muted2}
+      value={value}
+      onChangeText={onChangeText}
+      secureTextEntry={secureTextEntry}
+      keyboardType={keyboardType}
+      autoCapitalize={autoCapitalize ?? 'none'}
+    />
+  );
+}
 
 export function SignUp({ navigation }: Props) {
   const { top, bottom } = useSafeAreaInsets();
   const { signIn } = useAuth();
-  const [showPassword, setShowPassword] = useState(false);
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [termsAccepted, setTermsAccepted] = useState(false);
 
-  const {
-    control,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<FormData>({ resolver: zodResolver(schema) });
-
-  function onSubmit() {
-    if (!termsAccepted) { return; }
-    signIn();
-  }
-
   return (
-    <View style={[styles.container, { paddingTop: top }]}>
-      <StatusBar barStyle="dark-content" backgroundColor={theme.colors.background} />
+    <View style={{ flex: 1, backgroundColor: theme.colors.canvas }}>
+      <StatusBar barStyle="dark-content" backgroundColor={theme.colors.canvas} />
 
       <KeyboardAvoidingView
         style={{ flex: 1 }}
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        behavior={Platform.OS === 'ios' ? 'padding' : undefined}
       >
         <ScrollView
-          keyboardShouldPersistTaps="handled"
           showsVerticalScrollIndicator={false}
-          contentContainerStyle={{ paddingBottom: Math.max(bottom, 32) }}
+          keyboardShouldPersistTaps="handled"
+          contentContainerStyle={{ flexGrow: 1 }}
         >
-          {/* Back button */}
-          <View style={styles.backRow}>
-            <Pressable style={styles.backButton} onPress={() => navigation.goBack()}>
-              <ChevronLeft size={20} color={theme.colors.text} strokeWidth={2} />
+          {/* Back */}
+          <View style={{
+            paddingTop: top + 18,
+            paddingHorizontal: 18,
+            paddingBottom: 6,
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+          }}>
+            <Pressable
+              onPress={() => navigation.goBack()}
+              style={{
+                width: 40, height: 40, borderRadius: 999,
+                borderWidth: 1, borderColor: theme.colors.hairline,
+                backgroundColor: theme.colors.surface,
+                alignItems: 'center', justifyContent: 'center',
+              }}
+            >
+              <ArrowLeft size={18} color={theme.colors.ink} strokeWidth={1.6} />
             </Pressable>
+            <Text style={{
+              fontFamily: theme.fontFamily.mono.regular,
+              fontSize: 9.5,
+              letterSpacing: 0.12 * 9.5,
+              textTransform: 'uppercase',
+              color: theme.colors.muted,
+            }}>Criar conta</Text>
+            <View style={{ width: 40 }} />
           </View>
 
-          {/* Header */}
-          <View style={[styles.content, { paddingBottom: 0 }]}>
-            <AppText size="2xl" family="semiBold">Criar conta</AppText>
-            <AppText size="sm" color={theme.colors.textMuted} style={{ marginTop: -8 }}>
-              Preencha seus dados para começar
-            </AppText>
-          </View>
+          <View style={{ paddingHorizontal: 22, paddingTop: 18, gap: 20 }}>
+            {/* Heading */}
+            <View style={{ gap: 10 }}>
+              <Text style={{
+                fontFamily: theme.fontFamily.mono.regular,
+                fontSize: 9.5,
+                letterSpacing: 0.12 * 9.5,
+                textTransform: 'uppercase',
+                color: theme.colors.muted,
+              }}>Comece em 1 minuto</Text>
+              <Text style={{
+                fontFamily: theme.fontFamily.display.regular,
+                fontSize: 36,
+                color: theme.colors.ink,
+                lineHeight: 40,
+              }}>
+                Crie sua <Text style={{ fontStyle: 'italic' }}>despensa.</Text>
+              </Text>
+            </View>
 
-          {/* Form */}
-          <View style={[styles.content, { marginTop: 24 }]}>
-            <Controller
-              control={control}
-              name="name"
-              render={({ field: { onChange, value } }) => (
-                <Input
-                  label="Nome completo"
-                  placeholder="Seu nome"
-                  value={value}
-                  onChangeText={onChange}
+            {/* Fields */}
+            <View style={{ gap: 14 }}>
+              <View>
+                <FieldLabel>Nome</FieldLabel>
+                <InputField
+                  placeholder="Como podemos te chamar"
+                  value={name}
+                  onChangeText={setName}
                   autoCapitalize="words"
-                  error={errors.name?.message}
                 />
-              )}
-            />
-
-            <Controller
-              control={control}
-              name="email"
-              render={({ field: { onChange, value } }) => (
-                <Input
-                  label="E-mail"
+              </View>
+              <View>
+                <FieldLabel>Email</FieldLabel>
+                <InputField
                   placeholder="seu@email.com"
-                  value={value}
-                  onChangeText={onChange}
+                  value={email}
+                  onChangeText={setEmail}
                   keyboardType="email-address"
-                  autoCapitalize="none"
-                  error={errors.email?.message}
                 />
-              )}
-            />
-
-            <Controller
-              control={control}
-              name="password"
-              render={({ field: { onChange, value } }) => (
-                <Input
-                  label="Senha"
-                  placeholder="••••••"
-                  value={value}
-                  onChangeText={onChange}
-                  secureTextEntry={!showPassword}
-                  autoCapitalize="none"
-                  error={errors.password?.message}
-                  rightElement={
-                    <Pressable onPress={() => setShowPassword((v) => !v)} hitSlop={8}>
-                      {showPassword ? (
-                        <EyeOff size={20} color={theme.colors.textMuted} strokeWidth={1.8} />
-                      ) : (
-                        <Eye size={20} color={theme.colors.textMuted} strokeWidth={1.8} />
-                      )}
-                    </Pressable>
-                  }
-                />
-              )}
-            />
-
-            <Controller
-              control={control}
-              name="confirmPassword"
-              render={({ field: { onChange, value } }) => (
-                <Input
-                  label="Confirmar senha"
-                  placeholder="••••••"
-                  value={value}
-                  onChangeText={onChange}
+              </View>
+              <View>
+                <FieldLabel>Senha</FieldLabel>
+                <InputField
+                  placeholder="Mínimo 8 caracteres"
+                  value={password}
+                  onChangeText={setPassword}
                   secureTextEntry
-                  autoCapitalize="none"
-                  error={errors.confirmPassword?.message}
                 />
-              )}
-            />
+              </View>
+            </View>
 
             {/* Terms */}
             <Pressable
-              style={styles.termsRow}
-              onPress={() => setTermsAccepted((v) => !v)}
+              onPress={() => setTermsAccepted(!termsAccepted)}
+              style={{ flexDirection: 'row', alignItems: 'flex-start', gap: 10 }}
             >
-              <View style={[styles.checkbox, termsAccepted && styles.checkboxChecked]}>
-                {termsAccepted && <Check size={12} color="#fff" strokeWidth={2.5} />}
+              <View style={{
+                width: 18, height: 18, borderRadius: 4, flexShrink: 0, marginTop: 2,
+                backgroundColor: termsAccepted ? theme.colors.ink : theme.colors.surface,
+                borderWidth: termsAccepted ? 0 : 1,
+                borderColor: theme.colors.hairline,
+                alignItems: 'center', justifyContent: 'center',
+              }}>
+                {termsAccepted && <Check size={14} color={theme.colors.canvas} strokeWidth={2} />}
               </View>
-              <Text style={styles.termsText}>
-                <Text style={{ fontFamily: theme.fontFamily.sans.regular, fontSize: theme.fontSize.sm, color: theme.colors.textMuted }}>
-                  Aceito os{' '}
-                </Text>
-                <Text style={styles.termsLink}>termos de uso</Text>
-                <Text style={{ fontFamily: theme.fontFamily.sans.regular, fontSize: theme.fontSize.sm, color: theme.colors.textMuted }}>
-                  {' '}e a{' '}
-                </Text>
-                <Text style={styles.termsLink}>política de privacidade</Text>
+              <Text style={{
+                fontFamily: theme.fontFamily.sans.regular,
+                fontSize: 12.5,
+                color: theme.colors.muted,
+                lineHeight: 18,
+                flex: 1,
+              }}>
+                Concordo com os{' '}
+                <Text style={{ textDecorationLine: 'underline', color: theme.colors.ink }}>termos de uso</Text>
+                {' '}e a{' '}
+                <Text style={{ textDecorationLine: 'underline', color: theme.colors.ink }}>política de privacidade</Text>
+                {' '}alinhada à LGPD.
               </Text>
             </Pressable>
 
-            <Button
-              variant="primary"
-              size="lg"
-              label="Criar conta"
-              onPress={handleSubmit(onSubmit)}
-              disabled={!termsAccepted}
-              style={{ width: '100%' }}
-            />
-
-            <View style={{ flexDirection: 'row', justifyContent: 'center', gap: 4 }}>
-              <AppText size="sm" color={theme.colors.textMuted}>Já tem conta?</AppText>
-              <Pressable onPress={() => navigation.navigate('Login')}>
-                <AppText size="sm" color={theme.colors.primary} family="medium">Entrar</AppText>
-              </Pressable>
-            </View>
+            {/* CTA */}
+            <Pressable
+              onPress={termsAccepted ? signIn : undefined}
+              style={({ pressed }) => ({
+                height: 54,
+                borderRadius: 999,
+                backgroundColor: termsAccepted ? theme.colors.ink : theme.colors.hairline,
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: 10,
+                opacity: pressed ? 0.88 : 1,
+              })}
+            >
+              <Text style={{
+                fontFamily: theme.fontFamily.sans.semiBold,
+                fontSize: 16,
+                color: termsAccepted ? theme.colors.canvas : theme.colors.muted,
+              }}>Criar conta</Text>
+              <ArrowRight size={18} color={termsAccepted ? theme.colors.canvas : theme.colors.muted} strokeWidth={1.6} />
+            </Pressable>
           </View>
+
+          <View style={{ flex: 1 }} />
+          <Text style={{
+            fontFamily: theme.fontFamily.mono.regular,
+            fontSize: 9.5,
+            letterSpacing: 0.12 * 9.5,
+            textTransform: 'uppercase',
+            color: theme.colors.muted,
+            textAlign: 'center',
+            paddingVertical: 20,
+            paddingBottom: Math.max(bottom, 28),
+          }}>
+            Já tem conta?{' '}
+            <Text
+              onPress={() => navigation.navigate('Login')}
+              style={{ color: theme.colors.ink }}
+            >
+              Entrar →
+            </Text>
+          </Text>
         </ScrollView>
       </KeyboardAvoidingView>
     </View>
