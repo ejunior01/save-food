@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 200" width="760" height="200" role="img" aria-label="DespensaCerta — Galho horizontal">
+  <title>DespensaCerta — Galho Horizontal</title>
+
+  <!-- Cream background -->
+  <rect width="760" height="200" fill="#FAF5EB"/>
+
+  <!-- Icon mark: 400x400 scaled to 160x160, positioned at (20,20) -->
+  <g transform="translate(20,20) scale(0.4)">
+    <rect width="400" height="400" rx="72" fill="#FAF5EB" stroke="#E4D9C4" stroke-width="6"/>
+    <line x1="200" y1="298" x2="200" y2="146" stroke="#1F4D2E" stroke-width="14" stroke-linecap="round"/>
+    <path d="M0,0 C18,-22 18,-58 0,-80 C-18,-58 -18,-22 0,0 Z" transform="translate(200,265) rotate(-44)" fill="#3DA672"/>
+    <path d="M0,0 C18,-22 18,-58 0,-80 C-18,-58 -18,-22 0,0 Z" transform="translate(200,265) rotate(44)" fill="#3DA672"/>
+    <path d="M0,0 C18,-22 18,-58 0,-80 C-18,-58 -18,-22 0,0 Z" transform="translate(200,208) rotate(-37)" fill="#3DA672"/>
+    <path d="M0,0 C18,-22 18,-58 0,-80 C-18,-58 -18,-22 0,0 Z" transform="translate(200,208) rotate(37)" fill="#3DA672"/>
+    <path d="M0,0 C18,-22 18,-58 0,-80 C-18,-58 -18,-22 0,0 Z" transform="translate(200,148)" fill="#3DA672"/>
+  </g>
+
+  <!-- Subtle vertical separator -->
+  <line x1="196" y1="36" x2="196" y2="164" stroke="#1F4D2E" stroke-width="1.5" opacity="0.15"/>
+
+  <!-- Wordmark -->
+  <text x="213" y="106"
+        font-size="58"
+        font-family="'Instrument Serif', Georgia, serif"
+        fill="#1F4D2E"
+        xml:space="preserve">Despensa<tspan fill="#3DA672" font-style="italic">Certa</tspan></text>
+
+  <!-- Tagline -->
+  <text x="215" y="143"
+        font-size="15"
+        font-family="'DM Sans', 'Helvetica Neue', sans-serif"
+        fill="#1A2B1F"
+        opacity="0.42"
+        letter-spacing="0.4">Cuide do que está em casa</text>
+</svg>

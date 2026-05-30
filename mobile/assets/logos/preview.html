@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DespensaCerta — Identidade Visual</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'DM Sans', 'Helvetica Neue', sans-serif;
+      background: #E8DFC8;
+      color: #1A2B1F;
+      padding: 48px 40px 80px;
+    }
+
+    /* ── PAGE HEADER ─────────────────────────── */
+    .page-header { margin-bottom: 56px; }
+    .eyebrow {
+      font-size: 11px; font-weight: 600; letter-spacing: 2px;
+      text-transform: uppercase; color: #3DA672; margin-bottom: 8px;
+    }
+    .page-header h1 {
+      font-family: 'Instrument Serif', serif;
+      font-size: 36px; color: #1F4D2E; margin-bottom: 8px;
+    }
+    .page-header p { font-size: 14px; opacity: 0.52; max-width: 520px; line-height: 1.65; }
+
+    /* ── SECTION HEADER ──────────────────────── */
+    .section-label {
+      font-size: 11px; font-weight: 600; text-transform: uppercase;
+      letter-spacing: 2px; color: #3DA672; margin-bottom: 16px;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .section-label::after {
+      content: ''; flex: 1; height: 1px; background: rgba(26,43,31,0.14);
+    }
+    .section { margin-bottom: 56px; }
+
+    /* ── CARD ────────────────────────────────── */
+    .card {
+      background: #fff;
+      border-radius: 24px;
+      overflow: hidden;
+      box-shadow: 0 6px 32px rgba(26,43,31,0.07);
+      margin-bottom: 24px;
+    }
+    .card-header {
+      padding: 28px 32px 0;
+      display: flex; align-items: flex-start; gap: 18px;
+    }
+    .card-badge {
+      width: 34px; height: 34px; border-radius: 10px;
+      background: #F4ECDB; display: flex; align-items: center;
+      justify-content: center; font-size: 12px; font-weight: 600;
+      color: #3DA672; flex-shrink: 0; margin-top: 3px;
+    }
+    .card-badge.green { background: #D5E8C8; }
+    .card-meta { flex: 1; }
+    .card-name {
+      font-family: 'Instrument Serif', serif;
+      font-size: 21px; color: #1F4D2E; margin-bottom: 5px;
+    }
+    .card-name em { font-style: italic; color: #3DA672; }
+    .card-desc {
+      font-size: 13px; opacity: 0.56; line-height: 1.65; max-width: 520px;
+    }
+
+    /* ── FEATURED IMPROVED ICON ──────────────── */
+    .featured-body {
+      padding: 28px 32px 32px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+    .featured-col-left { display: flex; flex-direction: column; gap: 20px; }
+    .featured-col-right { display: flex; flex-direction: column; gap: 16px; }
+
+    .icon-scale-strip {
+      display: flex; align-items: flex-end; gap: 18px; padding: 20px;
+      background: #FAF5EB; border-radius: 16px;
+    }
+    .icon-size-item {
+      display: flex; flex-direction: column; align-items: center; gap: 6px;
+    }
+    .icon-size-item img { display: block; }
+    .size-label { font-size: 10px; opacity: 0.38; font-weight: 500; }
+
+    .on-dark-strip {
+      display: flex; align-items: center; gap: 18px; padding: 20px;
+      background: #1F4D2E; border-radius: 16px;
+    }
+
+    .compare-old {
+      padding: 16px 20px;
+      background: #F8F4EC;
+      border-radius: 14px;
+      border: 1px dashed rgba(26,43,31,0.15);
+    }
+    .compare-old .compare-label {
+      font-size: 10px; opacity: 0.38; font-weight: 600;
+      text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px;
+    }
+    .compare-old img { display: block; }
+
+    /* ── LOCKUP PREVIEW ──────────────────────── */
+    .lockup-wrap { display: flex; flex-direction: column; gap: 12px; }
+    .lockup-label {
+      font-size: 11px; opacity: 0.38; text-transform: uppercase;
+      letter-spacing: 1px; font-weight: 600;
+    }
+    .lockup-box {
+      border-radius: 14px; overflow: hidden;
+      border: 1px solid rgba(26,43,31,0.07);
+    }
+    .lockup-box img { display: block; width: 100%; height: auto; }
+    .lockup-box.dark { background: #1F4D2E; padding: 16px 20px; }
+    .lockup-box.dark img { opacity: 0.95; }
+
+    /* ── STANDARD CONCEPT CARD ───────────────── */
+    .concept-body {
+      padding: 24px 32px 28px;
+      display: grid; grid-template-columns: 180px 1fr; gap: 28px;
+      align-items: start;
+    }
+    .icon-col { display: flex; flex-direction: column; gap: 14px; }
+    .icon-row { display: flex; align-items: center; gap: 12px; }
+    .icon-row img { display: block; border-radius: var(--r, 14px); }
+    .lockup-col { display: flex; flex-direction: column; gap: 14px; }
+    .concept-footer {
+      padding: 0 32px 24px;
+      display: flex; gap: 8px; flex-wrap: wrap;
+    }
+    .tag {
+      font-size: 11px; padding: 5px 12px; border-radius: 999px;
+      background: #F4ECDB; color: #1F4D2E; font-weight: 500;
+    }
+    .tag.g { background: #D5E8C8; }
+
+    hr.soft { border: none; border-top: 1px solid rgba(26,43,31,0.08); margin: 24px 32px; }
+
+    /* ── PALETTE CARD ────────────────────────── */
+    .palette-card {
+      background: #fff; border-radius: 20px; padding: 28px 32px;
+      box-shadow: 0 4px 20px rgba(26,43,31,0.06);
+      margin-top: 48px;
+    }
+    .swatches { display: flex; gap: 18px; flex-wrap: wrap; margin-top: 16px; }
+    .swatch-item { text-align: center; }
+    .swatch {
+      width: 52px; height: 52px; border-radius: 14px;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.12); margin-bottom: 6px;
+    }
+    .swatch-hex { font-size: 10px; opacity: 0.38; }
+    .swatch-name { font-size: 10px; opacity: 0.52; font-weight: 600; }
+  </style>
+</head>
+<body>
+
+  <div class="page-header">
+    <div class="eyebrow">DespensaCerta · Identidade Visual 2.0</div>
+    <h1>Refinamento de Logo</h1>
+    <p>O conceito da despensa é mantido. O ícone foi redesenhado para transmitir vida, profundidade e identidade de marca — com geometria limpa, ervas brotando do topo e alimentos visíveis na prateleira de baixo.</p>
+  </div>
+
+  <!-- ══════════════════════════════════════════
+       SEÇÃO 1 — ÍCONE MELHORADO (DESTAQUE)
+  ═══════════════════════════════════════════ -->
+  <div class="section">
+    <div class="section-label">Ícone — Refinamento Principal</div>
+
+    <div class="card">
+      <div class="card-header">
+        <div class="card-badge green">✦</div>
+        <div class="card-meta">
+          <div class="card-name">Despensa <em>Viva</em> — Ícone com Vida</div>
+          <div class="card-desc">
+            Mesmo conceito da despensa/pantry, completamente reformulado.
+            Gradiente de profundidade no armário, três ervas brotando do topo
+            e três itens coloridos visíveis na prateleira inferior: laranja/cítrico,
+            verde pistache e rosé/tomate. O ícone conta uma história sem texto.
+          </div>
+        </div>
+      </div>
+
+      <div class="featured-body">
+
+        <!-- ── COLUNA ESQUERDA: tamanhos + comparação ── -->
+        <div class="featured-col-left">
+
+          <!-- Escala de tamanhos — fundo claro -->
+          <div>
+            <div style="font-size:11px;opacity:0.38;font-weight:600;text-transform:uppercase;letter-spacing:1px;margin-bottom:10px">Fundo claro</div>
+            <div class="icon-scale-strip">
+              <div class="icon-size-item">
+                <img src="icon-improved.svg" width="120" height="120" style="border-radius:22px" alt=""/>
+                <span class="size-label">120×120</span>
+              </div>
+              <div class="icon-size-item">
+                <img src="icon-improved.svg" width="72" height="72" style="border-radius:14px" alt=""/>
+                <span class="size-label">72×72</span>
+              </div>
+              <div class="icon-size-item">
+                <img src="icon-improved.svg" width="44" height="44" style="border-radius:9px" alt=""/>
+                <span class="size-label">44×44</span>
+              </div>
+              <div class="icon-size-item">
+                <img src="icon-improved.svg" width="28" height="28" style="border-radius:6px" alt=""/>
+                <span class="size-label">28×28</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Fundo escuro -->
+          <div>
+            <div style="font-size:11px;opacity:0.38;font-weight:600;text-transform:uppercase;letter-spacing:1px;margin-bottom:10px">Versão dark (fundo escuro)</div>
+            <div class="on-dark-strip">
+              <div class="icon-size-item">
+                <img src="icon-improved-dark.svg" width="96" height="96" style="border-radius:18px" alt=""/>
+                <span class="size-label" style="color:#FAF5EB;opacity:0.45">96×96</span>
+              </div>
+              <div class="icon-size-item">
+                <img src="icon-improved-dark.svg" width="56" height="56" style="border-radius:11px" alt=""/>
+                <span class="size-label" style="color:#FAF5EB;opacity:0.45">56×56</span>
+              </div>
+              <div class="icon-size-item">
+                <img src="icon-improved-dark.svg" width="36" height="36" style="border-radius:7px" alt=""/>
+                <span class="size-label" style="color:#FAF5EB;opacity:0.45">36×36</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Comparação antes vs depois -->
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+            <div class="compare-old">
+              <div class="compare-label">Ícone atual</div>
+              <img src="../logo-icon.svg" width="100" height="100" style="opacity:0.7" alt="Ícone atual"/>
+            </div>
+            <div class="compare-old" style="background:#FAF5EB">
+              <div class="compare-label">Novo ícone</div>
+              <img src="icon-improved.svg" width="100" height="100" style="border-radius:18px" alt="Novo ícone"/>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── COLUNA DIREITA: lockups ── -->
+        <div class="featured-col-right">
+          <div class="lockup-wrap">
+            <div class="lockup-label">Lockup horizontal — fundo claro</div>
+            <div class="lockup-box">
+              <img src="icon-improved-horizontal.svg" alt="Lockup horizontal claro"/>
+            </div>
+          </div>
+          <div class="lockup-wrap">
+            <div class="lockup-label">Lockup horizontal — fundo escuro</div>
+            <div class="lockup-box dark">
+              <img src="icon-improved-horizontal.svg"
+                   alt="Lockup horizontal escuro"
+                   style="filter: invert(1) hue-rotate(0deg) brightness(0.9); opacity:0.88"/>
+            </div>
+          </div>
+
+          <!-- Elementos de design -->
+          <div style="margin-top:8px;padding:16px 20px;background:#F8F4EC;border-radius:14px">
+            <div style="font-size:11px;opacity:0.38;font-weight:600;text-transform:uppercase;letter-spacing:1px;margin-bottom:12px">O que mudou</div>
+            <div style="font-size:13px;opacity:0.65;line-height:1.75">
+              <div>🌿 &nbsp;3 ervas orgânicas brotam do topo do armário</div>
+              <div>🟠 &nbsp;Laranja, pistache e rosé visíveis na prateleira</div>
+              <div>🎨 &nbsp;Gradiente #1F4D2E → #266040 para profundidade</div>
+              <div>💡 &nbsp;Puxadores e divisória criam hierarquia visual</div>
+              <div>📦 &nbsp;Forma simplificada — 15× menos paths que o atual</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════
+       SEÇÃO 2 — CONCEITOS ALTERNATIVOS
+  ═══════════════════════════════════════════ -->
+  <div class="section">
+    <div class="section-label">Conceitos Alternativos</div>
+
+    <!-- Conceito 1: Galho -->
+    <div class="card">
+      <div class="card-header">
+        <div class="card-badge">01</div>
+        <div class="card-meta">
+          <div class="card-name">Galho — <em>Marca Botânica</em></div>
+          <div class="card-desc">Cinco folhas num galho limpo. Orgânico, leve, legível do favicon ao banner.</div>
+        </div>
+      </div>
+      <div class="concept-body">
+        <div class="icon-col">
+          <div class="icon-row">
+            <img src="concept-1-galho-icon.svg" width="80" height="80" style="border-radius:16px" alt=""/>
+            <img src="concept-1-galho-icon.svg" width="48" height="48" style="border-radius:10px" alt=""/>
+            <img src="concept-1-galho-icon.svg" width="28" height="28" style="border-radius:6px" alt=""/>
+          </div>
+        </div>
+        <div class="lockup-col">
+          <div class="lockup-label">Lockup horizontal</div>
+          <div class="lockup-box"><img src="concept-1-galho-horizontal.svg" alt=""/></div>
+        </div>
+      </div>
+      <div class="concept-footer">
+        <span class="tag g">Orgânico</span>
+        <span class="tag">Minimalista</span>
+        <span class="tag">Fundo creme</span>
+      </div>
+    </div>
+
+    <!-- Conceito 2: Prateleira -->
+    <div class="card">
+      <div class="card-header">
+        <div class="card-badge">02</div>
+        <div class="card-meta">
+          <div class="card-name">Prateleira — <em>Despensa Geométrica</em></div>
+          <div class="card-desc">Três prateleiras com planta brotando. Fundo verde escuro premium, diferenciado.</div>
+        </div>
+      </div>
+      <div class="concept-body">
+        <div class="icon-col">
+          <div class="icon-row">
+            <img src="concept-2-prateleira-icon.svg" width="80" height="80" style="border-radius:16px" alt=""/>
+            <img src="concept-2-prateleira-icon.svg" width="48" height="48" style="border-radius:10px" alt=""/>
+            <img src="concept-2-prateleira-icon.svg" width="28" height="28" style="border-radius:6px" alt=""/>
+          </div>
+        </div>
+        <div class="lockup-col">
+          <div class="lockup-label">Lockup horizontal</div>
+          <div class="lockup-box"><img src="concept-2-prateleira-horizontal.svg" alt=""/></div>
+        </div>
+      </div>
+      <div class="concept-footer">
+        <span class="tag g">Premium</span>
+        <span class="tag">Geométrico</span>
+        <span class="tag">Fundo escuro</span>
+      </div>
+    </div>
+
+    <!-- Conceito 3: Relógio -->
+    <div class="card">
+      <div class="card-header">
+        <div class="card-badge">03</div>
+        <div class="card-meta">
+          <div class="card-name">Relógio Folha — <em>Controle de Validade</em></div>
+          <div class="card-desc">Relógio analógico com ponteiro crescendo em direção a uma folha. Diferenciador único.</div>
+        </div>
+      </div>
+      <div class="concept-body">
+        <div class="icon-col">
+          <div class="icon-row">
+            <img src="concept-3-relogio-icon.svg" width="80" height="80" style="border-radius:16px" alt=""/>
+            <img src="concept-3-relogio-icon.svg" width="48" height="48" style="border-radius:10px" alt=""/>
+            <img src="concept-3-relogio-icon.svg" width="28" height="28" style="border-radius:6px" alt=""/>
+          </div>
+        </div>
+        <div class="lockup-col">
+          <div class="lockup-label">Lockup horizontal</div>
+          <div class="lockup-box"><img src="concept-3-relogio-horizontal.svg" alt=""/></div>
+        </div>
+      </div>
+      <div class="concept-footer">
+        <span class="tag g">Storytelling</span>
+        <span class="tag">Único</span>
+        <span class="tag">Fundo creme</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════
+       PALETA E TIPOGRAFIA
+  ═══════════════════════════════════════════ -->
+  <div class="palette-card">
+    <div class="eyebrow">Sistema de Design Compartilhado</div>
+    <div class="swatches">
+      <div class="swatch-item">
+        <div class="swatch" style="background:#1F4D2E"></div>
+        <div class="swatch-hex">#1F4D2E</div>
+        <div class="swatch-name">Verde Escuro</div>
+      </div>
+      <div class="swatch-item">
+        <div class="swatch" style="background:#3DA672"></div>
+        <div class="swatch-hex">#3DA672</div>
+        <div class="swatch-name">Verde Médio</div>
+      </div>
+      <div class="swatch-item">
+        <div class="swatch" style="background:#FAF5EB; border:1px solid rgba(0,0,0,0.08)"></div>
+        <div class="swatch-hex">#FAF5EB</div>
+        <div class="swatch-name">Creme Claro</div>
+      </div>
+      <div class="swatch-item">
+        <div class="swatch" style="background:#F2C57C"></div>
+        <div class="swatch-hex">#F2C57C</div>
+        <div class="swatch-name">Pêssego</div>
+      </div>
+      <div class="swatch-item">
+        <div class="swatch" style="background:#D5E2A8"></div>
+        <div class="swatch-hex">#D5E2A8</div>
+        <div class="swatch-name">Pistache</div>
+      </div>
+      <div class="swatch-item">
+        <div class="swatch" style="background:#EAB5A8"></div>
+        <div class="swatch-hex">#EAB5A8</div>
+        <div class="swatch-name">Rosé</div>
+      </div>
+    </div>
+
+    <div style="margin-top:24px;padding-top:20px;border-top:1px solid rgba(26,43,31,0.08)">
+      <div class="eyebrow" style="margin-bottom:12px">Tipografia</div>
+      <div style="display:flex;gap:40px;flex-wrap:wrap;align-items:baseline">
+        <div>
+          <div style="font-family:'Instrument Serif',serif;font-size:26px;color:#1F4D2E">
+            Despensa<em style="color:#3DA672">Certa</em>
+          </div>
+          <div style="font-size:11px;opacity:0.4;margin-top:2px">Instrument Serif — wordmark, headlines</div>
+        </div>
+        <div>
+          <div style="font-family:'DM Sans',sans-serif;font-size:18px;font-weight:500;color:#1A2B1F">
+            Cuide do que está em casa
+          </div>
+          <div style="font-size:11px;opacity:0.4;margin-top:2px">DM Sans — tagline, corpo, UI</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div style="margin-top:40px;text-align:center;font-size:12px;opacity:0.3;line-height:1.8">
+    SVG puro · escalável sem perda · pronto para React Native
+  </div>
+
+</body>
+</html>

@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="400" height="400" role="img" aria-label="DespensaCerta icon — Despensa Viva">
+  <title>DespensaCerta — Despensa Viva</title>
+  <defs>
+    <!-- Cabinet: dark green fading slightly lighter toward base -->
+    <linearGradient id="cab" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%"   stop-color="#1F4D2E"/>
+      <stop offset="100%" stop-color="#266040"/>
+    </linearGradient>
+    <!-- Warm inner glow for lower section -->
+    <radialGradient id="warm" cx="50%" cy="80%" r="55%">
+      <stop offset="0%"   stop-color="#F2C57C" stop-opacity="0.22"/>
+      <stop offset="100%" stop-color="#F2C57C" stop-opacity="0"/>
+    </radialGradient>
+    <!-- Soft elevation shadow on cabinet -->
+    <filter id="elev" x="-14%" y="-10%" width="128%" height="128%">
+      <feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#1A2B1F" flood-opacity="0.20"/>
+    </filter>
+  </defs>
+
+  <!-- ── Background ─────────────────────────────────── -->
+  <rect width="400" height="400" rx="72" fill="#FAF5EB"/>
+
+  <!-- ── Herb leaves (drawn behind cabinet so base is hidden by cabinet top) ── -->
+  <!-- Left leaf: base at (160,120), rotated −34° → tip at upper-left -->
+  <path d="M0,0 C17,-20 17,-48 0,-64 C-17,-48 -17,-20 0,0 Z"
+        transform="translate(160,120) rotate(-34)" fill="#3DA672"/>
+  <!-- Center leaf: base at (200,120), tip points straight up -->
+  <path d="M0,0 C17,-20 17,-48 0,-64 C-17,-48 -17,-20 0,0 Z"
+        transform="translate(200,120)" fill="#3DA672"/>
+  <!-- Right leaf: base at (240,120), rotated +34° → tip at upper-right -->
+  <path d="M0,0 C17,-20 17,-48 0,-64 C-17,-48 -17,-20 0,0 Z"
+        transform="translate(240,120) rotate(34)" fill="#3DA672"/>
+
+  <!-- ── Cabinet body ────────────────────────────────── -->
+  <rect x="98" y="120" width="204" height="240" rx="22" fill="url(#cab)" filter="url(#elev)"/>
+
+  <!-- Warm glow in lower pantry interior -->
+  <rect x="98" y="228" width="204" height="132" rx="0"
+        fill="url(#warm)" style="rx:0 0 22px 22px"/>
+
+  <!-- Upper section: door seam (center vertical) -->
+  <line x1="200" y1="120" x2="200" y2="228"
+        stroke="rgba(255,255,255,0.14)" stroke-width="3" stroke-linecap="round"/>
+
+  <!-- Left door panel highlight -->
+  <rect x="108" y="132" width="84" height="88" rx="14"
+        fill="rgba(255,255,255,0.08)"/>
+  <!-- Right door panel highlight -->
+  <rect x="208" y="132" width="84" height="88" rx="14"
+        fill="rgba(255,255,255,0.08)"/>
+
+  <!-- Door handles (cream circles) -->
+  <circle cx="174" cy="176" r="8" fill="rgba(250,245,235,0.72)"/>
+  <circle cx="226" cy="176" r="8" fill="rgba(250,245,235,0.72)"/>
+
+  <!-- ── Shelf divider ───────────────────────────────── -->
+  <rect x="98" y="225" width="204" height="8" rx="4"
+        fill="rgba(255,255,255,0.24)"/>
+
+  <!-- ── Food items in lower section — the "vida" ──── -->
+  <!-- Warm orange / citrus -->
+  <circle cx="136" cy="284" r="23" fill="#F2C57C" opacity="0.95"/>
+  <!-- Pistachio / herb green -->
+  <circle cx="200" cy="290" r="18" fill="#D5E2A8" opacity="0.90"/>
+  <!-- Muted rose / tomato -->
+  <circle cx="262" cy="282" r="21" fill="#EAB5A8" opacity="0.88"/>
+
+  <!-- ── Cabinet feet ────────────────────────────────── -->
+  <rect x="116" y="358" width="28" height="16" rx="8" fill="#1A2B1F" opacity="0.50"/>
+  <rect x="256" y="358" width="28" height="16" rx="8" fill="#1A2B1F" opacity="0.50"/>
+</svg>

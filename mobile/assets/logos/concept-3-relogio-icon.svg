@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="400" height="400" role="img" aria-label="DespensaCerta — Relógio Folha mark">
+  <title>DespensaCerta — Relógio Folha</title>
+
+  <!-- Cream background -->
+  <rect width="400" height="400" rx="72" fill="#FAF5EB"/>
+
+  <!-- Clock face ring — center (200,215), radius 115 -->
+  <circle cx="200" cy="215" r="115" fill="none" stroke="#1F4D2E" stroke-width="15"/>
+
+  <!-- Hour hand pointing to ~10 o'clock
+       10:00 → -60° from vertical
+       tip = (200 + 88·sin(−60°), 215 − 88·cos(−60°))
+            = (200 − 76, 215 − 44) = (124, 171) -->
+  <line x1="200" y1="215" x2="124" y2="171"
+        stroke="#1F4D2E" stroke-width="16" stroke-linecap="round"/>
+
+  <!-- Minute hand pointing to 12 o'clock (straight up) — tip at y=110
+       This hand visually "grows into" the leaf above -->
+  <line x1="200" y1="215" x2="200" y2="110"
+        stroke="#1F4D2E" stroke-width="12" stroke-linecap="round"/>
+
+  <!-- Center pivot dot -->
+  <circle cx="200" cy="215" r="10" fill="#1F4D2E"/>
+
+  <!-- Leaf at 12 o'clock: base at circle top (y=100), tip at (200,40)
+       path: base at origin, tip 60px up -->
+  <path d="M0,0 C16,-18 16,-44 0,-60 C-16,-44 -16,-18 0,0 Z"
+        transform="translate(200,100)" fill="#3DA672"/>
+
+  <!-- Tick marks at 3, 6, 9 — subtle, inside the ring -->
+  <!-- 3 o'clock: x=315, y=215 — tick drawn inward -->
+  <line x1="303" y1="215" x2="315" y2="215"
+        stroke="#1F4D2E" stroke-width="9" stroke-linecap="round" opacity="0.38"/>
+  <!-- 6 o'clock: x=200, y=330 — tick drawn inward -->
+  <line x1="200" y1="318" x2="200" y2="330"
+        stroke="#1F4D2E" stroke-width="9" stroke-linecap="round" opacity="0.38"/>
+  <!-- 9 o'clock: x=85, y=215 — tick drawn inward -->
+  <line x1="97"  y1="215" x2="85"  y2="215"
+        stroke="#1F4D2E" stroke-width="9" stroke-linecap="round" opacity="0.38"/>
+</svg>

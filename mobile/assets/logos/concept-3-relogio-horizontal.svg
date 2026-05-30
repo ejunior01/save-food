@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 200" width="760" height="200" role="img" aria-label="DespensaCerta — Relógio horizontal">
+  <title>DespensaCerta — Relógio Horizontal</title>
+
+  <!-- Cream background -->
+  <rect width="760" height="200" fill="#FAF5EB"/>
+
+  <!-- Icon mark: scaled 0.4x at (20,20) -->
+  <g transform="translate(20,20) scale(0.4)">
+    <rect width="400" height="400" rx="72" fill="#FAF5EB" stroke="#E4D9C4" stroke-width="6"/>
+    <circle cx="200" cy="215" r="115" fill="none" stroke="#1F4D2E" stroke-width="15"/>
+    <line x1="200" y1="215" x2="124" y2="171" stroke="#1F4D2E" stroke-width="16" stroke-linecap="round"/>
+    <line x1="200" y1="215" x2="200" y2="110" stroke="#1F4D2E" stroke-width="12" stroke-linecap="round"/>
+    <circle cx="200" cy="215" r="10" fill="#1F4D2E"/>
+    <path d="M0,0 C16,-18 16,-44 0,-60 C-16,-44 -16,-18 0,0 Z" transform="translate(200,100)" fill="#3DA672"/>
+    <line x1="303" y1="215" x2="315" y2="215" stroke="#1F4D2E" stroke-width="9" stroke-linecap="round" opacity="0.38"/>
+    <line x1="200" y1="318" x2="200" y2="330" stroke="#1F4D2E" stroke-width="9" stroke-linecap="round" opacity="0.38"/>
+    <line x1="97"  y1="215" x2="85"  y2="215" stroke="#1F4D2E" stroke-width="9" stroke-linecap="round" opacity="0.38"/>
+  </g>
+
+  <!-- Subtle vertical separator -->
+  <line x1="196" y1="36" x2="196" y2="164" stroke="#1F4D2E" stroke-width="1.5" opacity="0.15"/>
+
+  <!-- Wordmark -->
+  <text x="213" y="106"
+        font-size="58"
+        font-family="'Instrument Serif', Georgia, serif"
+        fill="#1F4D2E"
+        xml:space="preserve">Despensa<tspan fill="#3DA672" font-style="italic">Certa</tspan></text>
+
+  <!-- Tagline -->
+  <text x="215" y="143"
+        font-size="15"
+        font-family="'DM Sans', 'Helvetica Neue', sans-serif"
+        fill="#1A2B1F"
+        opacity="0.42"
+        letter-spacing="0.4">Cuide do que está em casa</text>
+</svg>

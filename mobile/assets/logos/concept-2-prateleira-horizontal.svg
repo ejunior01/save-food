@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 200" width="760" height="200" role="img" aria-label="DespensaCerta — Prateleira horizontal">
+  <title>DespensaCerta — Prateleira Horizontal</title>
+
+  <!-- Cream background -->
+  <rect width="760" height="200" fill="#FAF5EB"/>
+
+  <!-- Icon mark: scaled 0.4x at (20,20) -->
+  <g transform="translate(20,20) scale(0.4)">
+    <rect width="400" height="400" rx="72" fill="#1F4D2E"/>
+    <rect x="76" y="294" width="248" height="13" rx="6.5" fill="#FAF5EB"/>
+    <rect x="76" y="224" width="248" height="13" rx="6.5" fill="#FAF5EB"/>
+    <rect x="76" y="154" width="248" height="13" rx="6.5" fill="#FAF5EB"/>
+    <rect x="76"  y="142" width="13" height="178" rx="6.5" fill="#FAF5EB" opacity="0.28"/>
+    <rect x="311" y="142" width="13" height="178" rx="6.5" fill="#FAF5EB" opacity="0.28"/>
+    <line x1="200" y1="154" x2="200" y2="94" stroke="#3DA672" stroke-width="12" stroke-linecap="round"/>
+    <path d="M0,0 C12,-14 12,-38 0,-52 C-12,-38 -12,-14 0,0 Z" transform="translate(200,134) rotate(-44)" fill="#3DA672"/>
+    <path d="M0,0 C12,-14 12,-38 0,-52 C-12,-38 -12,-14 0,0 Z" transform="translate(200,134) rotate(44)" fill="#3DA672"/>
+    <path d="M0,0 C12,-14 12,-38 0,-52 C-12,-38 -12,-14 0,0 Z" transform="translate(200,94)" fill="#3DA672"/>
+  </g>
+
+  <!-- Subtle vertical separator -->
+  <line x1="196" y1="36" x2="196" y2="164" stroke="#1F4D2E" stroke-width="1.5" opacity="0.15"/>
+
+  <!-- Wordmark -->
+  <text x="213" y="106"
+        font-size="58"
+        font-family="'Instrument Serif', Georgia, serif"
+        fill="#1F4D2E"
+        xml:space="preserve">Despensa<tspan fill="#3DA672" font-style="italic">Certa</tspan></text>
+
+  <!-- Tagline -->
+  <text x="215" y="143"
+        font-size="15"
+        font-family="'DM Sans', 'Helvetica Neue', sans-serif"
+        fill="#1A2B1F"
+        opacity="0.42"
+        letter-spacing="0.4">Cuide do que está em casa</text>
+</svg>

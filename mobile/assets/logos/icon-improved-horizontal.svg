@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 180" width="640" height="180" role="img" aria-label="DespensaCerta">
+  <title>DespensaCerta</title>
+  <defs>
+    <linearGradient id="cab-h" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%"   stop-color="#1F4D2E"/>
+      <stop offset="100%" stop-color="#266040"/>
+    </linearGradient>
+  </defs>
+
+  <!-- ── Icon mark (400×400 → 140×140, positioned at 20,20) ── -->
+  <g transform="translate(20,20) scale(0.35)">
+    <rect width="400" height="400" rx="72" fill="none"/>
+    <path d="M0,0 C17,-20 17,-48 0,-64 C-17,-48 -17,-20 0,0 Z" transform="translate(160,120) rotate(-34)" fill="#3DA672"/>
+    <path d="M0,0 C17,-20 17,-48 0,-64 C-17,-48 -17,-20 0,0 Z" transform="translate(200,120)" fill="#3DA672"/>
+    <path d="M0,0 C17,-20 17,-48 0,-64 C-17,-48 -17,-20 0,0 Z" transform="translate(240,120) rotate(34)" fill="#3DA672"/>
+    <rect x="98" y="120" width="204" height="240" rx="22" fill="url(#cab-h)"/>
+    <line x1="200" y1="120" x2="200" y2="228" stroke="rgba(255,255,255,0.14)" stroke-width="3" stroke-linecap="round"/>
+    <rect x="108" y="132" width="84" height="88" rx="14" fill="rgba(255,255,255,0.08)"/>
+    <rect x="208" y="132" width="84" height="88" rx="14" fill="rgba(255,255,255,0.08)"/>
+    <circle cx="174" cy="176" r="8" fill="rgba(250,245,235,0.72)"/>
+    <circle cx="226" cy="176" r="8" fill="rgba(250,245,235,0.72)"/>
+    <rect x="98" y="225" width="204" height="8" rx="4" fill="rgba(255,255,255,0.24)"/>
+    <circle cx="136" cy="284" r="23" fill="#F2C57C" opacity="0.95"/>
+    <circle cx="200" cy="290" r="18" fill="#D5E2A8" opacity="0.90"/>
+    <circle cx="262" cy="282" r="21" fill="#EAB5A8" opacity="0.88"/>
+    <rect x="116" y="358" width="28" height="16" rx="8" fill="#1A2B1F" opacity="0.50"/>
+    <rect x="256" y="358" width="28" height="16" rx="8" fill="#1A2B1F" opacity="0.50"/>
+  </g>
+
+  <!-- ── Wordmark — centered vertically in 180px canvas ── -->
+  <text x="196" y="107"
+        font-size="62"
+        font-family="'Instrument Serif', Georgia, serif"
+        fill="#1F4D2E"
+        xml:space="preserve">Despensa<tspan fill="#3DA672" font-style="italic">Certa</tspan></text>
+</svg>

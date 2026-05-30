@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="400" height="400" role="img" aria-label="DespensaCerta — Galho mark">
+  <title>DespensaCerta — Galho</title>
+
+  <!-- Warm cream background -->
+  <rect width="400" height="400" rx="72" fill="#FAF5EB"/>
+
+  <!-- Main stem -->
+  <line x1="200" y1="298" x2="200" y2="146" stroke="#1F4D2E" stroke-width="14" stroke-linecap="round"/>
+
+  <!-- Leaf path: base at origin, tip 80px upward, ~30px wide at widest -->
+  <!-- Bottom pair at y=265 -->
+  <path d="M0,0 C18,-22 18,-58 0,-80 C-18,-58 -18,-22 0,0 Z"
+        transform="translate(200,265) rotate(-44)" fill="#3DA672"/>
+  <path d="M0,0 C18,-22 18,-58 0,-80 C-18,-58 -18,-22 0,0 Z"
+        transform="translate(200,265) rotate(44)" fill="#3DA672"/>
+
+  <!-- Middle pair at y=208 -->
+  <path d="M0,0 C18,-22 18,-58 0,-80 C-18,-58 -18,-22 0,0 Z"
+        transform="translate(200,208) rotate(-37)" fill="#3DA672"/>
+  <path d="M0,0 C18,-22 18,-58 0,-80 C-18,-58 -18,-22 0,0 Z"
+        transform="translate(200,208) rotate(37)" fill="#3DA672"/>
+
+  <!-- Top single leaf -->
+  <path d="M0,0 C18,-22 18,-58 0,-80 C-18,-58 -18,-22 0,0 Z"
+        transform="translate(200,148)" fill="#3DA672"/>
+</svg>

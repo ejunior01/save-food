@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="400" height="400" role="img" aria-label="DespensaCerta — Prateleira mark">
+  <title>DespensaCerta — Prateleira</title>
+
+  <!-- Deep green background -->
+  <rect width="400" height="400" rx="72" fill="#1F4D2E"/>
+
+  <!-- Three pantry shelves -->
+  <rect x="76" y="294" width="248" height="13" rx="6.5" fill="#FAF5EB"/>
+  <rect x="76" y="224" width="248" height="13" rx="6.5" fill="#FAF5EB"/>
+  <rect x="76" y="154" width="248" height="13" rx="6.5" fill="#FAF5EB"/>
+
+  <!-- Side vertical supports (subtle) -->
+  <rect x="76"  y="142" width="13" height="178" rx="6.5" fill="#FAF5EB" opacity="0.28"/>
+  <rect x="311" y="142" width="13" height="178" rx="6.5" fill="#FAF5EB" opacity="0.28"/>
+
+  <!-- Plant sprouting upward from top shelf -->
+  <!-- Stem: from shelf top (y=154) going to y=94 -->
+  <line x1="200" y1="154" x2="200" y2="94" stroke="#3DA672" stroke-width="12" stroke-linecap="round"/>
+
+  <!-- Smaller leaf path: base at origin, 52px tall -->
+  <!-- Left leaf -->
+  <path d="M0,0 C12,-14 12,-38 0,-52 C-12,-38 -12,-14 0,0 Z"
+        transform="translate(200,134) rotate(-44)" fill="#3DA672"/>
+  <!-- Right leaf -->
+  <path d="M0,0 C12,-14 12,-38 0,-52 C-12,-38 -12,-14 0,0 Z"
+        transform="translate(200,134) rotate(44)" fill="#3DA672"/>
+  <!-- Top leaf -->
+  <path d="M0,0 C12,-14 12,-38 0,-52 C-12,-38 -12,-14 0,0 Z"
+        transform="translate(200,94)" fill="#3DA672"/>
+</svg>
